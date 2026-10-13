@@ -1,0 +1,1 @@
+Place people files here. See README.txt in the main folder.

@@ -1,0 +1,1 @@
+Place paper PDFs here, e.g. 2013_plant_cell_reddy.pdf, and add pdf: "pdfs/<name>.pdf" to that paper in data/content.js.

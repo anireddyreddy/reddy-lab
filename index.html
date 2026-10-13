@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+/* Base reset for standalone hosting */
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Reddy Lab, Colorado State</title>
+<meta name="description" content="Reddy Laboratory, Department of Biology, Colorado State University. Calcium signaling, pre-mRNA splicing and the epitranscriptome in plants.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: herbarium sheet meets gene model. Exon-block rhythm, splice-arc dividers, specimen-label captions. */
+:root{
+  --bg:#f3f5f0; --paper:#ffffff; --ink:#15231a; --muted:#56655b; --line:#d5ddd3;
+  --green:#1e4d2b; --green-2:#2f6b3e; --gold:#b9a94a; --gold-soft:#efe9c4;
+  --ca:#2a7d8c; --sp:#8a5a1e; --mod:#6b4b8a; --comp:#3e5d7a;
+  --leaf:#4f8a4a; --leaf-2:#86b36a; --stem:#3a5a35; --fruit:#c4483a; --grain:#c9a64a; --chloro:#3f9a4a;
+  --display:"Newsreader","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --body:"Public Sans","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:6px; --wrap:1240px; --bar:#1e4d2b; --bar-fg:#ffffff; --bar-link:#c8c372; --csu-gold:#c8c372; --csu-green:#1e4d2b;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1712; --paper:#16211a; --ink:#e6ede5; --muted:#9db0a2; --line:#2a3a2f;
+  --green:#8cc79a; --green-2:#a7d6b2; --gold:#d8c96a; --gold-soft:#2d2b17;
+  --ca:#6cc3d1; --sp:#d9a35e; --mod:#b79bd6; --comp:#8fb3d4;
+  --leaf:#6fae68; --leaf-2:#9bcb7e; --stem:#89b07f; --fruit:#e0695a; --grain:#dcbc63; --chloro:#5fbf6a;
+  --bar:#123a1f; --bar-fg:#f2f5ef; --bar-link:#d8cf7a; --csu-gold:#d8cf7a; --csu-green:#8cc79a;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1712; --paper:#16211a; --ink:#e6ede5; --muted:#9db0a2; --line:#2a3a2f;
+  --green:#8cc79a; --green-2:#a7d6b2; --gold:#d8c96a; --gold-soft:#2d2b17;
+  --ca:#6cc3d1; --sp:#d9a35e; --mod:#b79bd6; --comp:#8fb3d4;
+  --leaf:#6fae68; --leaf-2:#9bcb7e; --stem:#89b07f; --fruit:#e0695a; --grain:#dcbc63; --chloro:#5fbf6a;
+  --bar:#0b2414; --bar-fg:#cfe3d4; --bar-link:#d8c96a;
+  color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+a{color:var(--green-2)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:3px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{font-family:var(--display);font-weight:500;text-wrap:balance;line-height:1.15;margin:0}
+h2{font-size:clamp(1.8rem,3.4vw,2.6rem)}
+h3{font-size:1.3rem}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:1.08rem;color:var(--muted);max-width:65ch}
+em.sp{font-style:italic}
+
+/* Header: Ecker-style two tiers. Utility strip, brand row, then a full-width sticky menu bar. */
+.utility{background:var(--bar);color:var(--bar-fg);font-size:.95rem;font-weight:600;letter-spacing:.02em;border-bottom:1px solid color-mix(in srgb,var(--csu-gold) 50%,transparent)}
+.ut-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:12px;flex-wrap:wrap}
+.ut-name{display:flex;align-items:center;flex-wrap:wrap;gap:6px 16px;font-size:clamp(1rem,1.9vw,1.3rem);font-weight:600}
+.ut-name b{font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--bar-fg)}
+.ut-name i{width:2px;height:1.2em;background:var(--csu-gold)}
+.utility a{color:var(--bar-link);text-decoration:none;font-weight:700;font-size:.92rem}
+.brandband{position:relative;overflow:hidden;background:
+  radial-gradient(120% 140% at 0% 50%,color-mix(in srgb,var(--leaf-2) 22%,transparent),transparent 60%),
+  linear-gradient(180deg,var(--paper),var(--bg));border-bottom:1px solid var(--line)}
+.brandband::after{content:"";position:absolute;right:-40px;top:-30px;width:320px;height:260px;opacity:.10;pointer-events:none;
+  background:radial-gradient(circle at 30% 40%,var(--leaf) 0 2px,transparent 3px) 0 0/22px 22px}
+.brandrow{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:clamp(16px,2.6vw,28px)}
+.brand{display:flex;align-items:center;gap:clamp(14px,2.2vw,26px);text-decoration:none;color:var(--ink);min-width:0}
+.emblem{flex:none;width:clamp(78px,10vw,118px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 38%,var(--paper) 0 55%,color-mix(in srgb,var(--gold) 30%,var(--paper)) 100%);
+  border:3px solid var(--csu-gold);box-shadow:0 0 0 7px color-mix(in srgb,var(--csu-green) 14%,transparent),0 14px 28px -18px rgba(0,0,0,.6)}
+.emblem svg{height:84%;width:auto;max-width:80%}
+.wordmark{display:flex;flex-direction:column;min-width:0}
+.wm-kicker{font-family:var(--body);font-weight:800;font-size:clamp(.9rem,1.7vw,1.3rem);letter-spacing:.1em;text-transform:uppercase;color:var(--csu-green);padding-bottom:4px;border-bottom:3px solid var(--csu-gold);align-self:flex-start}
+.brand b{font-family:var(--display);font-weight:600;font-size:clamp(2.4rem,6.4vw,4.4rem);line-height:.95;letter-spacing:-.015em;color:var(--csu-green);margin:.16em 0 .12em}
+.brand small{display:block;font-family:var(--display);font-style:italic;font-size:clamp(1.15rem,2.3vw,1.65rem);line-height:1.25;color:var(--muted)}
+.brand-tag{font-family:var(--body);font-size:.98rem;font-weight:600;line-height:1.75;letter-spacing:.01em;color:var(--green-2);text-align:right;border-right:3px solid var(--csu-gold);padding-right:14px}
+.menubar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bar);border-bottom:4px solid var(--csu-gold);box-shadow:0 6px 16px -14px rgba(0,0,0,.5)}
+.mb-row{position:relative;display:flex;align-items:center}
+nav.main{display:flex;gap:0;align-items:stretch;justify-content:space-between;width:100%}
+nav.main>a,.dd-btn{display:flex;align-items:center;height:58px;text-decoration:none;color:var(--bar-fg);font:700 1.02rem var(--body);letter-spacing:.015em;padding:0 13px;background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;white-space:nowrap}
+.dd-btn::after{content:"";display:inline-block;width:6px;height:6px;margin-left:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg)}
+nav.main>a:hover,.dd-btn:hover,.dd-btn[aria-expanded="true"],.dd:hover .dd-btn{background:var(--csu-gold);color:#1e4d2b}
+.dd{position:relative;display:flex}
+.dd-menu{display:none;position:absolute;top:100%;left:0;min-width:270px;background:var(--paper);border:1px solid var(--line);border-top:3px solid var(--csu-gold);padding:6px;box-shadow:0 18px 40px -20px rgba(0,0,0,.45);z-index:30}
+.dd-menu a{display:block;padding:10px 12px;text-decoration:none;color:var(--ink);font-size:.98rem;border-radius:3px}
+.dd-menu a:hover{background:var(--gold-soft)}
+.dd-menu a.sub{padding-left:24px;color:var(--muted);font-size:.85rem}
+.dd-menu a.scholar-link{border-top:1px solid var(--line);margin-top:4px;color:var(--green-2);font-weight:600}
+.dd:nth-last-of-type(-n+2) .dd-menu{left:auto;right:0}
+.dd.open .dd-menu{display:block}
+@media (hover:hover) and (min-width:1181px){.dd:hover .dd-menu,.dd:focus-within .dd-menu{display:block}}
+.menu-btn{display:none;background:none;border:0;color:var(--bar-fg);padding:15px 0;font:700 1.05rem var(--body);cursor:pointer;letter-spacing:.04em}
+.menu-btn::before{content:"";display:inline-block;width:18px;height:12px;margin-right:10px;vertical-align:-1px;border-top:2px solid currentColor;border-bottom:2px solid currentColor;background:linear-gradient(currentColor,currentColor) center/100% 2px no-repeat}
+@media (max-width:1180px){
+  .brand-tag{display:none}
+  .menu-btn{display:inline-block}
+  nav.main{display:none;position:absolute;left:0;right:0;top:100%;background:var(--paper);border-bottom:4px solid var(--csu-gold);flex-direction:column;align-items:stretch;padding:4px clamp(16px,4vw,40px) 16px;max-height:calc(100vh - 60px);overflow-y:auto;-webkit-overflow-scrolling:touch}
+  nav.main.open{display:flex}
+  nav.main>a,.dd-btn{color:var(--ink);width:100%;height:auto;text-align:left;padding:13px 8px;border-bottom:1px solid var(--line);font-size:1rem;justify-content:space-between}
+  .dd{flex-direction:column}
+  .dd-menu{position:static;box-shadow:none;border:0;padding:0 0 6px 12px;min-width:0}
+  .dd-menu a{padding:11px 8px}
+}
+@media (max-width:560px){#scholarUtil{display:none}.ut-name i{display:none}.ut-name{flex-direction:column;align-items:flex-start;gap:0}}
+section.block,#statement,#calcium,#splicing,#systems,#collaborators,#gallery,#talks,#honors,#grads,#undergrads,#postdocs,#saps,#contact,#movies{scroll-margin-top:72px}
+
+/* Hero */
+.hero{padding-block:clamp(36px,6vw,72px) 28px}
+.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(24px,4vw,56px);align-items:center}
+.hero-grid>*{min-width:0}
+.hero h1{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:400;letter-spacing:-.012em;line-height:1.12;margin-top:0;max-width:22ch}
+.hero h1 em{font-style:italic;color:var(--csu-green);font-weight:500}
+.hero-sub{display:block;margin-top:.45em;padding-top:.4em;border-top:2px solid var(--csu-gold);width:fit-content;font-style:italic;font-weight:400;font-size:.62em;letter-spacing:0;color:var(--green-2)}
+.hero .lede{margin-top:18px}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:var(--r);font:600 .92rem var(--body);text-decoration:none;border:1px solid var(--green);color:var(--green)}
+.btn.solid{background:var(--green);color:var(--paper)}
+.btn:hover{filter:brightness(1.08)}
+.genemodel{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.genemodel svg{width:100%;height:auto;display:block}
+.fig-tabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.fig-tab{font-family:var(--display);font-size:1.15rem;background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);padding:2px 4px 4px;cursor:pointer}
+.fig-tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--csu-gold)}
+.fig-tab:focus-visible{outline:2px solid var(--csu-gold);outline-offset:2px}
+
+.genemodel figcaption{font-family:var(--mono);font-size:.72rem;color:var(--muted);margin-top:8px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.alt-exon{animation:pulse 3.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.alt-exon{animation:none}html{scroll-behavior:auto}}
+.hero-head h1{max-width:none}
+.hero-figs{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.5vw,28px);margin:clamp(20px,3vw,32px) 0;align-items:stretch}
+.hero-figs>*{min-width:0;margin:0;display:flex;flex-direction:column}
+.hero-figs svg{margin-block:auto}
+.fig-img{width:100%;height:auto;display:block;margin-block:auto;border-radius:4px}
+.fig-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-block:auto;align-items:start}
+.fig-box{border:1px solid var(--line);border-radius:6px;padding:6px;background:#fff}
+.fig-box,.fig-link{display:block;cursor:zoom-in}
+.fig-link{margin-block:auto}
+.fig-box:hover,.fig-link:hover img{outline:2px solid var(--csu-gold);outline-offset:2px}
+.fig-box img{width:100%;height:auto;display:block}
+.hero-figs .fig-wide{grid-column:1/-1}
+.hero-figs .fig-wide .fig-link{max-width:980px;margin-inline:auto}
+.fig-pair-meta{grid-template-columns:2.3fr 1fr;align-items:center}
+.fig-placeholder{flex:1;min-height:220px;display:grid;place-items:center;border:2px dashed var(--line);border-radius:6px;color:var(--muted);font-size:.9rem}
+.fig-credit{margin:8px 0 0;font-size:.72rem;color:var(--muted)}
+.genemodel .fig-title{font-family:var(--display);font-size:1.15rem;color:var(--ink);font-weight:700;margin:0 0 10px;display:block}
+.hero-body .lede{margin-top:0;max-width:75ch}
+@media (max-width:760px){.hero-figs{grid-template-columns:1fr}}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr}}
+
+/* Species strip */
+.species{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:36px}
+.sp-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:10px 8px 8px;text-align:center;text-decoration:none;color:var(--ink)}
+.sp-card svg{width:100%;height:auto;aspect-ratio:3/4;display:block}
+.sp-card span{display:block;font-family:var(--display);font-style:italic;font-size:.95rem;margin-top:4px}
+.sp-card small{display:block;font-family:var(--mono);font-size:.64rem;color:var(--muted);letter-spacing:.06em}
+@media (max-width:860px){.species{grid-template-columns:repeat(3,1fr)}}
+.species{max-width:560px}
+.sp-card{background:none;border:0;padding:0}
+.sp-card>svg,.sp-card>img{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:8px;box-sizing:border-box;width:100%}
+.sp-card span{margin-top:8px}
+.sp-card>img{padding:0}
+@media (max-width:480px){.species{grid-template-columns:repeat(3,1fr);gap:8px}.sp-card small{font-size:.58rem}}
+
+/* Sections */
+section.block{padding-block:clamp(48px,7vw,88px);border-top:1px solid var(--line)}
+#pi{padding-top:clamp(20px,3vw,36px);padding-bottom:clamp(10px,1.5vw,18px)}
+#pi + .hero{padding-top:clamp(16px,2.5vw,28px)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:end;margin-bottom:28px}
+.sec-head .eyebrow{margin-bottom:8px}
+.arc{display:block;width:100%;height:28px;color:var(--line)}
+
+/* Journal covers */
+.covers{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px}
+.cover{margin:0}
+.cover .frame{aspect-ratio:3/4;max-width:100%;border-radius:3px;overflow:hidden;border:1px solid var(--line);position:relative;background:var(--paper);box-shadow:0 10px 24px -16px rgba(0,0,0,.45)}
+.cover canvas,.cover img{width:100%;height:100%;display:block;object-fit:cover}
+.cover .mast{position:absolute;left:0;right:0;top:0;padding:10px 12px;font-family:var(--display);font-weight:600;font-size:1.05rem;color:#fff;background:linear-gradient(rgba(0,0,0,.45),transparent)}
+.cover .slot{position:absolute;bottom:8px;left:8px;font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;background:rgba(0,0,0,.55);color:#fff;padding:3px 6px;border-radius:2px}
+.cover figcaption{font-size:.82rem;color:var(--muted);margin-top:8px;line-height:1.4}
+
+/* Research */
+.themes{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.theme{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:clamp(20px,3vw,32px);display:flex;flex-direction:column;gap:14px;min-width:0}
+.theme .tag{font-family:var(--sans,inherit);font-size:.92rem;font-weight:700;letter-spacing:0}
+.theme.ca .tag{color:var(--ca)} .theme.sp .tag{color:var(--sp)} .theme.mod .tag{color:var(--mod)} .theme.comp .tag{color:var(--comp)} .theme.bio .tag{color:var(--green-2)}
+.theme.bio{grid-column:1/-1}
+.theme ul{margin:0;padding-left:1.1em;color:var(--muted)}
+.theme ul li{margin-bottom:4px}
+.theme .glyph{height:64px;width:100%}
+.theme a.more{font-weight:600;font-size:.9rem;margin-top:auto}
+@media (max-width:760px){.themes{grid-template-columns:1fr}}
+.statement{display:grid;grid-template-columns:220px minmax(0,1fr);gap:32px;margin-bottom:40px}
+.statement p{font-family:var(--display);font-size:clamp(1.12rem,1.6vw,1.3rem);line-height:1.55;max-width:62ch}
+.statement p+p{margin-top:14px}
+@media (max-width:760px){.statement{grid-template-columns:1fr;gap:12px}}
+
+/* Systems */
+.systems{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:16px;max-width:720px}
+.system{display:flex;flex-direction:column;align-items:center;gap:8px;margin:0}
+.system svg{width:100%;height:auto;aspect-ratio:3/4;background:var(--paper);border:1px solid var(--line);border-radius:var(--r)}
+.system h4{font-family:var(--display);font-style:italic;font-weight:500;font-size:1.05rem;margin:0;text-align:center}
+.system p{font-size:.88rem;color:var(--muted);margin-top:4px}
+
+/* Publications */
+.pub-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:18px}
+.chip{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:6px 14px;font:500 .85rem var(--body);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--paper)}
+.search{flex:1 1 220px;min-width:0;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:var(--r);padding:8px 12px;font:400 .95rem var(--body)}
+.pubs{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.pub{display:grid;grid-template-columns:64px minmax(0,1fr);gap:16px;padding-block:16px;border-bottom:1px solid var(--line)}
+.pub .yr{font-family:var(--mono);font-size:.9rem;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:2px}
+.pub .t{font-family:var(--display);font-size:1.12rem;line-height:1.35}
+.pub .t a{color:var(--ink);text-decoration:none}
+.pub .t a:hover{color:var(--green-2);text-decoration:underline}
+.pub .au{font-size:.88rem;color:var(--muted);margin-top:4px}
+.pub .au b{color:var(--ink);font-weight:600}
+.pub .meta{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:6px;font-size:.84rem}
+.pub .j{font-style:italic}
+.dot{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase}
+.dot::before{content:"";width:8px;height:8px;border-radius:2px;background:currentColor}
+.dot.bio{color:var(--leaf)} .dot.other{color:var(--muted)} .pre{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:0 5px}
+.dot.ca{color:var(--ca)} .dot.sp{color:var(--sp)} .dot.mod{color:var(--mod)} .dot.comp{color:var(--comp)}
+.pub .links a{font-weight:600;text-decoration:none;margin-right:12px}
+.pub .links a:hover{text-decoration:underline}
+.count{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.scholar{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;background:var(--gold-soft);border-radius:var(--r);padding:16px 20px;margin-bottom:24px}
+.scholar p{font-size:.92rem;max-width:70ch}
+
+/* People */
+.pi{display:grid;grid-template-columns:200px minmax(0,1fr);gap:28px;align-items:start;margin-bottom:36px}
+.portrait{aspect-ratio:4/5;max-width:100%;border-radius:var(--r);background:var(--paper);border:1px dashed var(--line);display:grid;place-items:center;text-align:center;color:var(--muted);font-size:.8rem;padding:12px}
+.pi p{max-width:65ch;color:var(--muted)}
+.pi p+p{margin-top:10px}
+@media (max-width:640px){.pi{grid-template-columns:1fr}.portrait{max-width:200px}}
+.groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.group{border-top:3px solid var(--green);background:var(--paper);border-radius:0 0 var(--r) var(--r);padding:16px}
+.group h3{font-size:1.1rem}
+.slot-list{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px}
+.slot-list li{border:1px dashed var(--line);border-radius:4px;padding:10px;font-size:.84rem;color:var(--muted)}
+
+/* Collaborators */
+.collab{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:0;border-top:1px solid var(--line)}
+.collab div{padding:14px 12px 14px 0;border-bottom:1px solid var(--line)}
+.collab b{font-family:var(--display);font-weight:500;font-size:1.08rem;display:block}
+.collab span{font-size:.84rem;color:var(--muted)}
+
+/* Service / misc tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:clamp(18px,3vw,28px)}
+.panel h3{margin-bottom:6px}
+.panel .hint{color:var(--muted);font-size:.9rem;max-width:65ch}
+.rows{list-style:none;padding:0;margin:14px 0 0}
+.rows li{display:grid;grid-template-columns:110px minmax(0,1fr);gap:14px;padding:10px 0;border-top:1px solid var(--line);font-size:.92rem}
+.rows li .k{font-family:var(--mono);font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.rows li.empty{color:var(--muted);font-style:italic}
+@media (max-width:480px){.rows li{grid-template-columns:1fr;gap:2px}}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+
+
+/* Showcase: covers shelf and plant art mosaic, directly under the hero */
+.showcase{background:color-mix(in srgb,var(--leaf-2) 7%,var(--bg))}
+#covers{border-top:0;padding-top:clamp(14px,1.8vw,22px);padding-bottom:clamp(18px,2.5vw,30px)}
+#covers h2{font-size:clamp(1.5rem,2.7vw,2.1rem)}
+#covers .eyebrow{font-family:var(--body);text-transform:none;font-size:1rem;font-weight:600;letter-spacing:.01em;color:var(--green-2)}
+.hero{border-top:1px solid var(--line)}
+.cover-row{display:grid;grid-template-columns:repeat(6,minmax(0,162px));justify-content:space-between;gap:18px}
+.cover-row .cover figcaption b{display:block;font-size:.84rem}
+@media (max-width:1000px){
+  .cover-row{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:10px}
+  .cover-row .cover{flex:0 0 clamp(130px,28vw,155px);scroll-snap-align:start}
+}
+.cover-show{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.1fr);gap:clamp(18px,3vw,32px);align-items:start}
+.cover-shelf{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.cover a{color:inherit;text-decoration:none;display:block}
+.cover a:hover .frame{transform:translateY(-3px);box-shadow:0 18px 30px -16px rgba(0,0,0,.55)}
+.cover .frame{transition:transform .2s,box-shadow .2s}
+.cover.feature .mast{font-size:1.5rem;padding:16px 18px}
+.cover.feature figcaption{font-size:.95rem}
+.cover.feature figcaption b{display:block;font-family:var(--display);font-weight:500;font-size:1.15rem;color:var(--ink);margin-bottom:2px}
+.cover figcaption b{color:var(--ink);font-weight:600}
+@media (max-width:860px){
+  .cover-show{grid-template-columns:1fr}
+  #coverFeature{max-width:360px}
+  .cover-shelf{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:10px}
+  .cover-shelf .cover{flex:0 0 150px;scroll-snap-align:start}
+}
+.mosaic{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(150px,19vw,230px);gap:12px}
+.tile{position:relative;margin:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:var(--tint,var(--paper))}
+.tile.big{grid-column:span 2;grid-row:span 2}
+.tile svg{position:absolute;inset:8% 10% 22%;width:80%;height:70%}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tile figcaption{position:absolute;left:0;right:0;bottom:0;padding:10px 12px;font-size:.78rem;color:var(--muted);background:linear-gradient(transparent,var(--paper) 55%)}
+.tile figcaption b{display:block;color:var(--ink);font-family:var(--display);font-weight:500;font-style:italic;font-size:1rem}
+.tile.big figcaption b{font-size:1.35rem}
+.tile .plate{position:absolute;top:10px;left:12px;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--muted)}
+.tile.slot{border-style:dashed;display:grid;place-items:center;text-align:center;color:var(--muted);font-size:.84rem;padding:16px;background:var(--paper)}
+@media (max-width:760px){.mosaic{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:clamp(150px,44vw,220px)}}
+
+
+/* Moving band of covers and plant art under the menu bar */
+.marquee{background:linear-gradient(180deg,color-mix(in srgb,var(--bar) 10%,var(--bg)),var(--bg));border-bottom:1px solid var(--line);padding-block:14px 18px;overflow:hidden}
+.mq-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.mq-label{display:inline-flex;align-items:center;gap:10px;font-family:var(--body);font-size:clamp(1rem,1.6vw,1.2rem);font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--csu-green)}
+.mq-ico{width:2.4em;height:2.4em;flex:none;filter:drop-shadow(0 3px 5px rgba(0,0,0,.18))}
+.mq-toggle{background:var(--paper);border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:4px 14px;font:600 .8rem var(--body);cursor:pointer}
+.mq-viewport{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.mq-track{display:flex;gap:16px;width:max-content;animation:mq 70s linear infinite;padding-inline:8px}
+.mq-track.rev{animation-name:mqr;animation-duration:55s}
+@keyframes mqr{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.mq-head2{margin-top:16px}
+.marquee:hover .mq-track,.marquee.paused .mq-track{animation-play-state:paused}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mq-item{position:relative;flex:none;height:clamp(170px,22vw,250px);border-radius:4px;overflow:hidden;border:1px solid var(--line);background:var(--paper);box-shadow:0 12px 24px -18px rgba(0,0,0,.55);margin:0}
+.mq-item.cov{aspect-ratio:3/4}
+.mq-item.pl{aspect-ratio:1;height:clamp(150px,18vw,210px);background:color-mix(in srgb,var(--leaf-2) 14%,var(--paper))}
+.mq-item canvas,.mq-item img{width:100%;height:100%;display:block;object-fit:cover}
+.mq-item svg{position:absolute;inset:6% 12% 20%;width:76%;height:74%}
+.mq-item .mast{position:absolute;left:0;right:0;top:0;padding:8px 10px;font-family:var(--display);font-weight:600;font-size:.95rem;color:#fff;background:linear-gradient(rgba(0,0,0,.45),transparent)}
+.mq-item figcaption{position:absolute;left:0;right:0;bottom:0;padding:8px 10px;font-size:.74rem;color:var(--ink);background:linear-gradient(transparent,var(--paper) 60%)}
+.mq-item figcaption i{font-family:var(--display);font-size:.95rem}
+.mq-item.cov figcaption{color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.6))}
+@media (prefers-reduced-motion:reduce){.mq-track{animation:none}.mq-viewport{overflow-x:auto;-webkit-overflow-scrolling:touch}}
+
+
+/* Movies */
+.movies{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.movie{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.poster{position:relative;aspect-ratio:16/9;max-width:100%;display:grid;place-items:center}
+.poster.p1{background:radial-gradient(circle at 35% 45%,#7fe0a0 0 3%,transparent 4%),radial-gradient(circle at 62% 38%,#7fe0a0 0 2.5%,transparent 3.5%),radial-gradient(circle at 52% 62%,#7fe0a0 0 3%,transparent 4%),radial-gradient(circle at 50% 50%,#0f3b24 0 32%,#06140c 33%)}
+.poster.p2{background:linear-gradient(90deg,#0b2430,#145a66 45%,#6cc3d1 52%,#145a66 60%,#0b2430)}
+.poster.p3{background:linear-gradient(180deg,#e9efe3 0 62%,#6b4f2f 62%);}
+.poster.p3::after{content:"";position:absolute;left:20%;right:20%;bottom:38%;height:24%;background:radial-gradient(ellipse at 15% 100%,#4f8a4a 0 22%,transparent 23%),radial-gradient(ellipse at 50% 100%,#4f8a4a 0 26%,transparent 27%),radial-gradient(ellipse at 85% 100%,#4f8a4a 0 22%,transparent 23%)}
+.poster.p4{background:linear-gradient(135deg,var(--bar),#2f6b3e)}
+.poster .play{width:56px;height:56px;position:relative;z-index:1;transition:transform .2s}
+.movie:hover .play{transform:scale(1.08)}
+.poster .dur{position:absolute;right:8px;bottom:8px;font-family:var(--mono);font-size:.7rem;background:rgba(0,0,0,.6);color:#fff;padding:2px 6px;border-radius:3px;z-index:1}
+.movie figcaption{padding:12px 14px;font-size:.86rem;color:var(--muted)}
+.movie figcaption b{display:block;color:var(--ink);font-family:var(--display);font-weight:500;font-size:1.08rem;margin-bottom:2px}
+
+
+/* People cards, alumni, empty-state hints */
+.person{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;align-items:start;padding:10px 0;border-top:1px solid var(--line)}
+.person:first-of-type{border-top:0}
+.avatar{width:64px;height:80px;border-radius:4px;object-fit:cover;background:color-mix(in srgb,var(--leaf-2) 18%,var(--paper));display:grid;place-items:center;font-family:var(--display);font-size:1.3rem;color:var(--green);overflow:hidden}
+.person .avatar{display:grid;place-items:center;font-size:1.25rem;line-height:1;color:var(--green)}
+.person b{display:block;font-family:var(--display);font-weight:500;font-size:1.05rem}
+.person span{display:block;font-size:.84rem;color:var(--muted);line-height:1.4}
+.portrait img{width:100%;height:100%;object-fit:cover;border-radius:var(--r)}
+.portrait.has-img{border-style:solid;padding:0;overflow:hidden}
+.todo{font-size:.84rem;color:var(--muted);font-style:italic}
+.alumni{margin-top:28px}
+.movie video{width:100%;aspect-ratio:4/3;object-fit:contain;display:block;background:#000}
+.movie a{color:inherit;text-decoration:none;display:block}
+.photo img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+
+.quote-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,370px);gap:clamp(20px,4vw,48px);align-items:center}
+.quote-grid .motto{margin:0;text-align:center;max-width:none}
+.quote-grid .systems{margin:0;max-width:none}
+.quote-grid .system h4{font-size:.8rem;line-height:1.25;white-space:nowrap}
+.quote-grid .systems{gap:6px}
+.quote-grid .system{gap:4px}
+@media (max-width:760px){.quote-grid{grid-template-columns:1fr}.quote-grid .motto{text-align:center}.quote-grid .systems{max-width:340px;margin:0 auto}.quote-grid .system h4{white-space:normal}}
+.quote-band{padding:clamp(10px,1.5vw,16px) 0;background:var(--gold-soft);border-block:1px solid var(--line)}
+.motto{margin:0 auto;max-width:62ch;text-align:center;position:relative}
+.motto p{margin:0;font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(1.35rem,2.6vw,2rem);line-height:1.3;color:var(--green)}
+.back-home{display:inline-block;margin-bottom:18px;font-weight:600;font-size:.92rem;text-decoration:none;color:var(--green-2)}
+.back-home:hover{text-decoration:underline}
+#publications{border-top:3px solid var(--csu-gold)}
+.emblem.has-photo{background:#0d1a10;overflow:hidden}
+.emblem.has-photo img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+.sp-photo{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px;display:block;background:#0d1a10}
+.system .sp-photo{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border-radius:var(--r)}
+.mq-item.pl.photo{background:#0d1a10}
+.mq-item.pl.photo figcaption{color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.65))}
+.tile img + figcaption{color:#e9efe6;background:linear-gradient(transparent,rgba(0,0,0,.7) 60%)}
+.tile img + figcaption b{color:#fff}
+.mq-track.still{animation:none;justify-content:center;width:auto;margin-inline:auto}
+.tile.wide{grid-column:span 2}
+.tile.tall{grid-row:span 2}
+.tile.full{grid-column:1/-1}
+.mq-item.pl.tall{aspect-ratio:1/2}
+.tile.contain{background:#000;display:flex;flex-direction:column}
+.tile.contain img{position:static;flex:1 1 auto;min-height:0;width:100%;height:100%;object-fit:contain}
+.tile.contain figcaption{position:static;flex:none;background:var(--paper);color:var(--muted);padding:8px 12px;border-top:1px solid var(--line)}
+.tile.contain figcaption b{color:var(--ink)}
+.mq-item.pl.wide{aspect-ratio:2/1}
+
+/* CV-derived additions: education and career, alumni groups, funding badge, impact */
+details.cv{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+details.cv summary,details.al-group summary{cursor:pointer;font-weight:600;color:var(--green-2);list-style:none;padding:8px 0}
+details.cv summary::-webkit-details-marker,details.al-group summary::-webkit-details-marker{display:none}
+details.cv summary::before,details.al-group summary::before{content:"▸";display:inline-block;width:1em;transition:transform .15s}
+details[open].cv summary::before,details[open].al-group summary::before{transform:rotate(90deg)}
+details.cv h4,h4.lv{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:14px 0 0;font-weight:500}
+.al-group{border-top:1px solid var(--line)}
+.al-group summary{font-family:var(--display);font-size:1.15rem;font-weight:500;color:var(--ink)}
+.al-group .count{font-family:var(--mono);font-size:.75rem;color:var(--muted);margin-left:6px}
+.now{color:var(--green-2);font-size:.86rem}
+.ug-list{list-style:none;padding:0;margin:4px 0 8px;columns:3 220px;column-gap:24px;font-size:.88rem}
+.ug-list li{break-inside:avoid;padding:3px 0}
+.ug-list span{color:var(--muted)}
+.badge{display:inline-block;font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;background:var(--csu-gold);color:#1e4d2b;border-radius:3px;padding:1px 6px;vertical-align:2px}
+.stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+@media (max-width:480px){.stats{gap:10px}.stats b,.stats strong{font-size:1.6rem}}
+.stats-note{grid-column:1/-1;margin:0;font-size:.8rem}
+.fund-thanks{margin:0 0 4px;font-size:1.02rem;color:var(--ink)}
+.agencies{list-style:none;padding:0;margin:14px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0 28px}
+.agencies li{display:flex;align-items:center;justify-content:flex-start;gap:16px;min-height:72px;padding:12px 0;border-top:1px solid var(--line);position:relative;font-size:.98rem}
+.ag-name{min-width:0}
+.ag-logo{flex:none;width:88px;height:54px;display:grid;place-items:center;background:#fff;border-radius:4px;padding:3px 5px}
+.ag-logo img{display:block;width:auto;height:auto;max-width:80px;max-height:50px;object-fit:contain}
+.ag-logo.empty{background:none;position:relative}
+.ag-logo.empty::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--csu-gold)}
+.agencies li::before{content:none;display:none;left:0;top:calc(50% - 3.5px);width:7px;height:7px;border-radius:50%;background:var(--csu-gold)}
+#artGrid .tile figcaption b{font-style:normal}
+#artGrid .tile figcaption{font-size:.72rem;line-height:1.4;padding:8px 10px}
+#artGrid .tile figcaption b{font-size:.88rem;line-height:1.3;margin-bottom:2px}
+#artGrid .tile.big figcaption b{font-size:1rem}
+#artGrid .tile figcaption b i{font-style:italic}
+
+/* Plant Art: every legend sits below its figure */
+#artGrid .tile:not(.slot){display:flex;flex-direction:column;background:var(--paper)}
+#artGrid .tile:not(.slot) > img{position:static;flex:1 1 auto;min-height:0;width:100%;height:100%;object-fit:contain}
+#artGrid .tile.contain > img{object-fit:contain}
+#artGrid .tile.contain{background:#000}
+#artGrid .tile:not(.slot) > figcaption{position:static;flex:none;background:var(--paper);color:var(--muted);border-top:1px solid var(--line)}
+#artGrid .tile:not(.slot) > figcaption b{color:var(--ink)}
+
+/* Moving Plant Art row: same look as the Plant Art section (whole image, legend below) */
+.mq-item.pl.photo{display:flex;flex-direction:column;background:var(--paper);height:clamp(270px,28vw,340px);aspect-ratio:auto;width:clamp(220px,22vw,270px)}
+.mq-item.pl.photo.tall{width:clamp(120px,12vw,150px)}
+.mq-item.pl.photo.wide{width:clamp(360px,40vw,560px)}
+.mq-item.pl.photo > img{position:static;flex:1 1 auto;min-height:0;width:100%;height:100%;object-fit:contain;background:var(--mq-bg,var(--paper))}
+.mq-item.pl.photo > figcaption{position:static;flex:none;background:var(--paper);color:var(--ink);border-top:1px solid var(--line);font-family:var(--display);font-size:.8rem;line-height:1.3;padding:6px 9px 8px;white-space:normal;min-height:calc(5.2em + 14px)}
+.mq-item.pl.photo > figcaption b{display:block;font-weight:600}
+.mq-item.pl.photo > figcaption small{display:block;margin-top:2px;font-family:var(--sans,inherit);font-size:.68rem;line-height:1.3;color:var(--muted)}
+.mq-item.pl.photo > figcaption i{font-size:inherit}
+.mq-item.pl.photo.tall{width:clamp(170px,15vw,200px)}
+/* Gallery / art */
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.art{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.art .pic{aspect-ratio:1;max-width:100%;display:grid;place-items:center;background:color-mix(in srgb,var(--leaf-2) 10%,var(--paper))}
+.art .pic svg{width:72%;height:auto}
+.art figcaption{padding:10px 12px;font-size:.82rem;color:var(--muted);border-top:1px solid var(--line)}
+.art figcaption b{display:block;color:var(--ink);font-family:var(--display);font-weight:500;font-size:.98rem}
+.art.empty .pic{border-bottom:1px dashed var(--line);color:var(--muted);font-size:.8rem;text-align:center;padding:16px}
+
+.impact{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:28px;align-items:center}
+.stat{font-family:var(--display);font-size:clamp(2.4rem,5vw,3.6rem);color:var(--green);line-height:1}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.stats div{border-top:1px solid var(--line);padding-top:10px}
+.stats small{display:block;color:var(--muted);font-size:.82rem;margin-top:6px}
+@media (max-width:760px){.impact{grid-template-columns:1fr}}
+
+footer{border-top:1px solid var(--line);padding-block:32px 48px;font-size:.88rem;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between}
+.mono{font-family:var(--mono)}
+.copy{background:none;border:1px solid var(--line);color:var(--ink);border-radius:4px;padding:2px 8px;font:500 .78rem var(--body);cursor:pointer;margin-left:6px}
+</style>
+</head>
+<body>
+<!-- Botanical symbol library. Each specimen is drawn once and reused. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="atLeaf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--leaf-2)"/><stop offset="1" style="stop-color:var(--leaf)"/></linearGradient>
+    <linearGradient id="atLeafDark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--leaf)"/><stop offset="1" style="stop-color:var(--stem)"/></linearGradient>
+    <symbol id="arabidopsis" viewBox="0 0 120 160">
+      <ellipse cx="60" cy="138" rx="44" ry="6" fill="var(--stem)" opacity=".12"/><path d="M60 138 C59 112 62 84 60 58 C59 42 61 26 60 12" fill="none" stroke="var(--stem)" stroke-width="1.8" stroke-linecap="round"/><path d="M60.5 104 C68 94 76 82 82 64" fill="none" stroke="var(--stem)" stroke-width="1.3" stroke-linecap="round"/><path d="M60 92 C52 82 44 72 40 56" fill="none" stroke="var(--stem)" stroke-width="1.2" stroke-linecap="round"/><path d="M60.3 80.0 L61.9 77.5" stroke="var(--stem)" stroke-width=".7"/><path d="M61.9 77.5 L67.2 69.0" stroke="var(--leaf)" stroke-width="2" stroke-linecap="round"/><path d="M61.9 77.5 L67.2 69.0" stroke="var(--leaf-2)" stroke-width=".6" stroke-linecap="round" opacity=".8"/><path d="M60.0 72.0 L58.5 69.4" stroke="var(--stem)" stroke-width=".7"/><path d="M58.5 69.4 L53.5 60.7" stroke="var(--leaf)" stroke-width="2" stroke-linecap="round"/><path d="M58.5 69.4 L53.5 60.7" stroke="var(--leaf-2)" stroke-width=".6" stroke-linecap="round" opacity=".8"/><path d="M60.0 64.0 L61.7 61.5" stroke="var(--stem)" stroke-width=".7"/><path d="M61.7 61.5 L67.3 53.2" stroke="var(--leaf)" stroke-width="2" stroke-linecap="round"/><path d="M61.7 61.5 L67.3 53.2" stroke="var(--leaf-2)" stroke-width=".6" stroke-linecap="round" opacity=".8"/><path d="M59.8 56.0 L58.4 53.4" stroke="var(--stem)" stroke-width=".7"/><path d="M58.4 53.4 L53.7 44.5" stroke="var(--leaf)" stroke-width="2" stroke-linecap="round"/><path d="M58.4 53.4 L53.7 44.5" stroke="var(--leaf-2)" stroke-width=".6" stroke-linecap="round" opacity=".8"/><path d="M60.0 49.0 L61.5 46.4" stroke="var(--stem)" stroke-width=".7"/><path d="M61.5 46.4 L66.5 37.7" stroke="var(--leaf)" stroke-width="2" stroke-linecap="round"/><path d="M61.5 46.4 L66.5 37.7" stroke="var(--leaf-2)" stroke-width=".6" stroke-linecap="round" opacity=".8"/><path d="M60.4 43.0 L59.1 40.3" stroke="var(--stem)" stroke-width=".7"/><path d="M59.1 40.3 L54.7 31.3" stroke="var(--leaf)" stroke-width="2" stroke-linecap="round"/><path d="M59.1 40.3 L54.7 31.3" stroke="var(--leaf-2)" stroke-width=".6" stroke-linecap="round" opacity=".8"/><path d="M70.0 88.0 L72.1 85.8" stroke="var(--stem)" stroke-width=".7"/><path d="M72.1 85.8 L79.0 78.6" stroke="var(--leaf)" stroke-width="2" stroke-linecap="round"/><path d="M72.1 85.8 L79.0 78.6" stroke="var(--leaf-2)" stroke-width=".6" stroke-linecap="round" opacity=".8"/><path d="M75.0 78.0 L74.7 75.0" stroke="var(--stem)" stroke-width=".7"/><path d="M74.7 75.0 L73.6 65.1" stroke="var(--leaf)" stroke-width="2" stroke-linecap="round"/><path d="M74.7 75.0 L73.6 65.1" stroke="var(--leaf-2)" stroke-width=".6" stroke-linecap="round" opacity=".8"/><path d="M79.0 70.0 L81.2 67.9" stroke="var(--stem)" stroke-width=".7"/><path d="M81.2 67.9 L88.4 61.0" stroke="var(--leaf)" stroke-width="2" stroke-linecap="round"/><path d="M81.2 67.9 L88.4 61.0" stroke="var(--leaf-2)" stroke-width=".6" stroke-linecap="round" opacity=".8"/><path d="M48.0 78.0 L45.8 76.0" stroke="var(--stem)" stroke-width=".7"/><path d="M45.8 76.0 L38.3 69.3" stroke="var(--leaf)" stroke-width="2" stroke-linecap="round"/><path d="M45.8 76.0 L38.3 69.3" stroke="var(--leaf-2)" stroke-width=".6" stroke-linecap="round" opacity=".8"/><path d="M44.0 68.0 L44.4 65.0" stroke="var(--stem)" stroke-width=".7"/><path d="M44.4 65.0 L45.8 55.1" stroke="var(--leaf)" stroke-width="2" stroke-linecap="round"/><path d="M44.4 65.0 L45.8 55.1" stroke="var(--leaf-2)" stroke-width=".6" stroke-linecap="round" opacity=".8"/><path d="M41.5 62.0 L39.4 59.8" stroke="var(--stem)" stroke-width=".7"/><path d="M39.4 59.8 L32.5 52.6" stroke="var(--leaf)" stroke-width="2" stroke-linecap="round"/><path d="M39.4 59.8 L32.5 52.6" stroke="var(--leaf-2)" stroke-width=".6" stroke-linecap="round" opacity=".8"/><path d="M61.3 104.2 L61.7 103.7 L62.1 103.2 L62.5 102.8 L63.5 102.7 L64.4 102.7 L65.2 102.5 L65.9 102.3 L66.5 101.9 L67.0 101.5 L67.4 101.0 L67.6 100.3 L67.7 99.6 L67.7 98.7 L67.6 97.8 L66.9 97.0 L65.9 96.4 L65.0 96.5 L64.2 96.6 L63.5 96.9 L62.9 97.2 L62.4 97.6 L62.1 98.2 L61.8 98.8 L61.7 99.6 L61.7 100.4 L61.8 101.3 L62.0 102.3 L61.6 102.8 L61.1 103.3 L60.7 103.8Z" fill="url(#atLeaf)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M60.2 91.8 L59.9 91.4 L59.5 90.9 L59.1 90.5 L59.2 89.6 L59.3 88.8 L59.3 88.0 L59.2 87.4 L59.0 86.8 L58.6 86.3 L58.2 85.9 L57.7 85.7 L57.0 85.5 L56.2 85.4 L55.4 85.4 L54.5 85.9 L53.9 86.8 L53.8 87.6 L53.8 88.3 L53.9 89.0 L54.2 89.6 L54.5 90.1 L54.9 90.4 L55.5 90.7 L56.1 90.9 L56.9 91.0 L57.7 91.0 L58.6 91.0 L59.0 91.4 L59.4 91.8 L59.8 92.2Z" fill="url(#atLeaf)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><g transform="translate(60 136) scale(1 .52) translate(-60 -142)"><path d="M59.0 141.6 L58.3 143.6 L57.5 145.7 L56.8 147.7 L54.0 148.9 L51.4 150.3 L48.8 151.6 L47.3 153.4 L45.3 154.9 L44.9 157.0 L43.9 158.9 L44.4 161.4 L44.3 163.7 L45.5 166.4 L46.6 169.0 L49.5 170.8 L52.9 171.3 L55.4 170.0 L58.1 168.7 L59.5 166.9 L61.5 165.3 L61.9 163.2 L62.9 161.3 L62.4 158.8 L62.5 156.6 L61.2 153.9 L60.2 151.2 L58.8 148.4 L59.5 146.4 L60.3 144.4 L61.0 142.4Z" fill="url(#atLeafDark)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M59.5 143.4 L50.8 167.4" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M55.4 154.7 L49.5 156.4" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M53.8 158.9 L57.3 164.0" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M52.6 162.3 L46.7 164.0" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M54.4 157.5 L57.8 162.6" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M59.3 141.0 L57.4 142.4 L55.4 143.7 L53.5 145.1 L50.2 144.4 L47.0 144.0 L43.8 143.5 L41.4 144.2 L38.6 144.3 L36.9 146.0 L34.7 147.0 L33.6 149.6 L32.2 151.5 L31.5 154.8 L30.8 157.9 L32.4 161.3 L35.1 164.0 L38.3 164.4 L41.5 164.9 L43.9 164.2 L46.7 164.0 L48.4 162.4 L50.5 161.3 L51.6 158.7 L53.1 156.7 L53.7 153.5 L54.4 150.4 L54.9 147.0 L56.8 145.7 L58.8 144.3 L60.7 143.0Z" fill="url(#atLeafDark)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M58.6 142.9 L35.7 159.0" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M47.8 150.5 L41.4 148.3" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M43.8 153.4 L43.7 160.1" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M40.5 155.6 L34.1 153.4" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M45.1 152.4 L45.0 159.2" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M60.0 140.8 L57.5 140.8 L55.0 140.8 L52.5 140.8 L50.0 138.4 L47.5 136.2 L45.0 133.9 L42.5 133.1 L40.0 131.6 L37.5 132.0 L35.0 131.6 L32.5 133.1 L30.0 133.9 L27.5 136.1 L25.0 138.3 L24.3 142.0 L25.0 145.7 L27.5 147.9 L30.0 150.1 L32.5 150.9 L35.0 152.4 L37.5 152.0 L40.0 152.4 L42.5 150.9 L45.0 150.1 L47.5 147.8 L50.0 145.6 L52.5 143.2 L55.0 143.2 L57.5 143.2 L60.0 143.2Z" fill="url(#atLeafDark)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M58.2 142.0 L28.5 142.0" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M44.2 142.0 L40.0 136.5" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M39.0 142.0 L34.8 147.5" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M34.8 142.0 L30.6 136.5" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M40.8 142.0 L36.5 147.5" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M60.7 141.0 L58.8 139.7 L56.8 138.3 L54.9 137.0 L54.4 133.6 L53.7 130.5 L53.1 127.3 L51.6 125.3 L50.5 122.7 L48.4 121.6 L46.7 120.0 L43.9 119.8 L41.5 119.1 L38.3 119.6 L35.1 120.0 L32.4 122.7 L30.8 126.1 L31.5 129.2 L32.2 132.5 L33.6 134.4 L34.7 137.0 L36.9 138.0 L38.6 139.7 L41.4 139.8 L43.8 140.5 L47.0 140.0 L50.2 139.6 L53.5 138.9 L55.4 140.3 L57.4 141.6 L59.3 143.0Z" fill="url(#atLeafDark)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M58.6 141.1 L35.7 125.0" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M47.8 133.5 L47.7 126.7" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M43.8 130.6 L37.4 132.9" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M40.5 128.4 L40.4 121.6" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M45.1 131.6 L38.7 133.8" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M61.0 141.6 L60.3 139.6 L59.5 137.6 L58.8 135.6 L60.2 132.8 L61.2 130.1 L62.5 127.4 L62.4 125.2 L62.9 122.7 L61.9 120.8 L61.5 118.7 L59.5 117.1 L58.1 115.3 L55.4 114.0 L52.9 112.7 L49.5 113.2 L46.6 115.0 L45.5 117.6 L44.3 120.3 L44.4 122.6 L43.9 125.1 L44.9 127.0 L45.3 129.1 L47.3 130.6 L48.8 132.4 L51.4 133.7 L54.0 135.1 L56.8 136.3 L57.5 138.3 L58.3 140.4 L59.0 142.4Z" fill="url(#atLeafDark)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M59.5 140.6 L50.8 116.6" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M55.4 129.3 L58.8 124.2" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M53.8 125.1 L48.0 123.4" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M52.6 121.7 L56.0 116.6" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M54.4 126.5 L48.5 124.8" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M61.0 142.4 L61.7 140.4 L62.5 138.3 L63.2 136.3 L66.0 135.1 L68.6 133.7 L71.2 132.4 L72.7 130.6 L74.7 129.1 L75.1 127.0 L76.1 125.1 L75.6 122.6 L75.7 120.3 L74.5 117.6 L73.4 115.0 L70.5 113.2 L67.1 112.7 L64.6 114.0 L61.9 115.3 L60.5 117.1 L58.5 118.7 L58.1 120.8 L57.1 122.7 L57.6 125.2 L57.5 127.4 L58.8 130.1 L59.8 132.8 L61.2 135.6 L60.5 137.6 L59.7 139.6 L59.0 141.6Z" fill="url(#atLeafDark)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M60.5 140.6 L69.2 116.6" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M64.6 129.3 L70.5 127.6" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M66.2 125.1 L62.7 120.0" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M67.4 121.7 L73.3 120.0" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M65.6 126.5 L62.2 121.4" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M60.7 143.0 L62.6 141.6 L64.6 140.3 L66.5 138.9 L69.8 139.6 L73.0 140.0 L76.2 140.5 L78.6 139.8 L81.4 139.7 L83.1 138.0 L85.3 137.0 L86.4 134.4 L87.8 132.5 L88.5 129.2 L89.2 126.1 L87.6 122.7 L84.9 120.0 L81.7 119.6 L78.5 119.1 L76.1 119.8 L73.3 120.0 L71.6 121.6 L69.5 122.7 L68.4 125.3 L66.9 127.3 L66.3 130.5 L65.6 133.6 L65.1 137.0 L63.2 138.3 L61.2 139.7 L59.3 141.0Z" fill="url(#atLeafDark)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M61.4 141.1 L84.3 125.0" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M72.2 133.5 L78.6 135.7" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M76.2 130.6 L76.3 123.9" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M79.5 128.4 L85.9 130.6" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M74.9 131.6 L75.0 124.8" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M60.0 143.2 L62.5 143.2 L65.0 143.2 L67.5 143.2 L70.0 145.6 L72.5 147.8 L75.0 150.1 L77.5 150.9 L80.0 152.4 L82.5 152.0 L85.0 152.4 L87.5 150.9 L90.0 150.1 L92.5 147.9 L95.0 145.7 L95.7 142.0 L95.0 138.3 L92.5 136.1 L90.0 133.9 L87.5 133.1 L85.0 131.6 L82.5 132.0 L80.0 131.6 L77.5 133.1 L75.0 133.9 L72.5 136.2 L70.0 138.4 L67.5 140.8 L65.0 140.8 L62.5 140.8 L60.0 140.8Z" fill="url(#atLeafDark)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M61.8 142.0 L91.5 142.0" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M75.8 142.0 L80.0 147.5" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M81.0 142.0 L85.2 136.5" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M85.2 142.0 L89.4 147.5" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M79.2 142.0 L83.5 136.5" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M59.3 143.0 L61.2 144.3 L63.2 145.7 L65.1 147.0 L65.6 150.4 L66.3 153.5 L66.9 156.7 L68.4 158.7 L69.5 161.3 L71.6 162.4 L73.3 164.0 L76.1 164.2 L78.5 164.9 L81.7 164.4 L84.9 164.0 L87.6 161.3 L89.2 157.9 L88.5 154.8 L87.8 151.5 L86.4 149.6 L85.3 147.0 L83.1 146.0 L81.4 144.3 L78.6 144.2 L76.2 143.5 L73.0 144.0 L69.8 144.4 L66.5 145.1 L64.6 143.7 L62.6 142.4 L60.7 141.0Z" fill="url(#atLeafDark)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M61.4 142.9 L84.3 159.0" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M72.2 150.5 L72.3 157.3" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M76.2 153.4 L82.6 151.1" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M79.5 155.6 L79.6 162.4" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M74.9 152.4 L81.3 150.2" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M59.0 142.4 L59.7 144.4 L60.5 146.4 L61.2 148.4 L59.8 151.2 L58.8 153.9 L57.5 156.6 L57.6 158.8 L57.1 161.3 L58.1 163.2 L58.5 165.3 L60.5 166.9 L61.9 168.7 L64.6 170.0 L67.1 171.3 L70.5 170.8 L73.4 169.0 L74.5 166.4 L75.7 163.7 L75.6 161.4 L76.1 158.9 L75.1 157.0 L74.7 154.9 L72.7 153.4 L71.2 151.6 L68.6 150.3 L66.0 148.9 L63.2 147.7 L62.5 145.7 L61.7 143.6 L61.0 141.6Z" fill="url(#atLeafDark)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M60.5 143.4 L69.2 167.4" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M64.6 154.7 L61.2 159.8" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M66.2 158.9 L72.0 160.6" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M67.4 162.3 L64.0 167.4" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M65.6 157.5 L71.5 159.2" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M59.3 141.4 L58.3 142.6 L57.2 143.8 L56.2 145.0 L53.7 144.9 L51.4 145.0 L49.0 145.1 L47.5 145.9 L45.5 146.3 L44.8 147.7 L43.5 148.7 L43.4 150.7 L42.9 152.3 L43.3 154.6 L43.6 156.9 L45.6 159.2 L48.1 160.8 L50.5 160.7 L52.9 160.6 L54.4 159.8 L56.3 159.4 L57.0 158.0 L58.3 157.0 L58.4 155.0 L58.9 153.4 L58.5 151.0 L58.2 148.7 L57.7 146.2 L58.7 145.0 L59.7 143.8 L60.7 142.6Z" fill="url(#atLeaf)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M59.3 142.8 L47.3 157.2" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M53.6 149.6 L48.6 148.8" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M51.5 152.1 L53.2 157.0" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M49.8 154.1 L44.8 153.3" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M52.2 151.3 L53.9 156.1" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M59.8 141.0 L58.1 141.3 L56.3 141.6 L54.5 141.9 L52.4 140.2 L50.4 138.7 L48.3 137.1 L46.4 136.7 L44.4 135.8 L42.7 136.4 L40.9 136.4 L39.3 137.9 L37.7 138.9 L36.3 141.1 L34.8 143.2 L34.9 146.4 L35.9 149.5 L38.0 150.9 L40.1 152.5 L42.0 152.9 L44.0 153.8 L45.6 153.2 L47.5 153.2 L49.0 151.6 L50.6 150.6 L52.1 148.4 L53.5 146.3 L54.9 143.9 L56.7 143.6 L58.4 143.3 L60.2 143.0Z" fill="url(#atLeaf)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M58.8 142.2 L37.8 145.9" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M48.9 144.0 L45.2 139.9" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M45.2 144.6 L43.1 149.7" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M42.3 145.1 L38.5 141.0" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M46.5 144.4 L44.3 149.5" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M60.5 141.1 L58.8 140.2 L57.2 139.4 L55.6 138.5 L54.9 135.8 L54.1 133.3 L53.4 130.7 L52.1 129.2 L51.0 127.2 L49.2 126.6 L47.8 125.5 L45.5 125.7 L43.6 125.4 L41.0 126.3 L38.5 127.0 L36.6 129.5 L35.6 132.6 L36.3 135.1 L37.1 137.7 L38.4 139.1 L39.4 141.1 L41.3 141.7 L42.7 142.8 L45.0 142.6 L46.9 142.8 L49.5 142.0 L52.0 141.2 L54.6 140.3 L56.2 141.2 L57.9 142.0 L59.5 142.9Z" fill="url(#atLeaf)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M58.9 141.4 L39.3 131.0" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M49.7 136.5 L49.1 130.9" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M46.2 134.7 L41.3 137.3" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M43.5 133.2 L42.9 127.6" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M47.4 135.3 L42.4 137.9" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M60.8 141.6 L60.1 140.2 L59.3 138.8 L58.6 137.4 L59.5 135.2 L60.2 133.0 L60.9 130.8 L60.7 129.2 L61.0 127.2 L60.0 126.0 L59.5 124.5 L57.8 123.6 L56.5 122.5 L54.3 121.9 L52.1 121.3 L49.5 122.2 L47.2 123.9 L46.5 126.0 L45.8 128.2 L46.0 129.9 L45.7 131.8 L46.7 133.0 L47.2 134.6 L48.9 135.4 L50.2 136.5 L52.5 137.1 L54.6 137.7 L57.0 138.3 L57.7 139.6 L58.5 141.0 L59.2 142.4Z" fill="url(#atLeaf)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M59.5 141.0 L50.7 124.5" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M55.4 133.3 L57.8 129.0" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M53.8 130.3 L48.9 130.0" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M52.6 128.0 L55.0 123.7" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M54.3 131.3 L49.4 130.9" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M60.8 142.4 L61.5 141.0 L62.3 139.6 L63.0 138.3 L65.4 137.7 L67.5 137.1 L69.8 136.5 L71.1 135.4 L72.8 134.6 L73.3 133.0 L74.3 131.8 L74.0 129.9 L74.2 128.2 L73.5 126.0 L72.8 123.9 L70.5 122.2 L67.9 121.3 L65.7 121.9 L63.5 122.5 L62.2 123.6 L60.5 124.5 L60.0 126.0 L59.0 127.2 L59.3 129.2 L59.1 130.8 L59.8 133.0 L60.5 135.2 L61.4 137.4 L60.7 138.8 L59.9 140.2 L59.2 141.6Z" fill="url(#atLeaf)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M60.5 141.0 L69.3 124.5" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M64.6 133.3 L69.5 132.9" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M66.2 130.3 L63.8 126.1" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M67.4 128.0 L72.3 127.6" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M65.7 131.3 L63.3 127.0" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M60.5 142.9 L62.1 142.0 L63.8 141.2 L65.4 140.3 L68.0 141.2 L70.5 142.0 L73.1 142.8 L75.0 142.6 L77.3 142.8 L78.7 141.7 L80.6 141.1 L81.6 139.1 L82.9 137.7 L83.7 135.1 L84.4 132.6 L83.4 129.5 L81.5 127.0 L79.0 126.3 L76.4 125.4 L74.5 125.7 L72.2 125.5 L70.8 126.6 L69.0 127.2 L67.9 129.2 L66.6 130.7 L65.9 133.3 L65.1 135.8 L64.4 138.5 L62.8 139.4 L61.2 140.2 L59.5 141.1Z" fill="url(#atLeaf)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M61.1 141.4 L80.7 131.0" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M70.3 136.5 L75.3 139.2" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M73.8 134.7 L74.3 129.1" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M76.5 133.2 L81.5 135.9" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M72.6 135.3 L73.2 129.7" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M59.8 143.0 L61.6 143.3 L63.3 143.6 L65.1 143.9 L66.5 146.3 L67.9 148.4 L69.4 150.6 L71.0 151.6 L72.5 153.2 L74.4 153.2 L76.0 153.8 L78.0 152.9 L79.9 152.5 L82.0 150.9 L84.1 149.5 L85.1 146.4 L85.2 143.2 L83.7 141.1 L82.3 138.9 L80.7 137.9 L79.1 136.4 L77.3 136.4 L75.6 135.8 L73.6 136.7 L71.7 137.1 L69.6 138.7 L67.6 140.2 L65.5 141.9 L63.7 141.6 L61.9 141.3 L60.2 141.0Z" fill="url(#atLeaf)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M61.2 142.2 L82.2 145.9" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M71.1 144.0 L73.2 149.1" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M74.8 144.6 L78.5 140.5" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M77.7 145.1 L79.9 150.3" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M73.5 144.4 L77.3 140.3" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M59.3 142.6 L60.3 143.8 L61.3 145.0 L62.3 146.2 L61.8 148.7 L61.5 151.0 L61.1 153.4 L61.6 155.0 L61.7 157.0 L63.0 158.0 L63.7 159.4 L65.6 159.8 L67.1 160.6 L69.5 160.7 L71.9 160.8 L74.4 159.2 L76.4 156.9 L76.7 154.6 L77.1 152.3 L76.6 150.7 L76.5 148.7 L75.2 147.7 L74.5 146.3 L72.5 145.9 L71.0 145.1 L68.6 145.0 L66.3 144.9 L63.8 145.0 L62.8 143.8 L61.7 142.6 L60.7 141.4Z" fill="url(#atLeaf)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M60.7 142.8 L72.7 157.2" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M66.4 149.6 L64.7 154.4" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M68.5 152.1 L73.6 151.3" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M70.2 154.1 L68.5 159.0" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M67.8 151.3 L72.8 150.5" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M59.2 142.0 L59.2 143.4 L59.2 144.9 L59.2 146.3 L57.4 147.7 L55.9 149.1 L54.3 150.6 L53.8 152.0 L52.7 153.4 L53.0 154.9 L52.7 156.3 L53.8 157.7 L54.3 159.1 L55.9 160.6 L57.4 162.0 L60.0 162.4 L62.6 162.0 L64.1 160.6 L65.7 159.1 L66.2 157.7 L67.3 156.3 L67.0 154.9 L67.3 153.4 L66.2 152.0 L65.7 150.6 L64.1 149.1 L62.6 147.7 L60.8 146.3 L60.8 144.9 L60.8 143.4 L60.8 142.0Z" fill="url(#atLeaf)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M60.0 143.0 L60.0 160.0" stroke="var(--leaf-2)" stroke-width=".9" opacity=".9"/><path d="M60.0 151.0 L56.1 153.4" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M60.0 154.0 L63.9 156.4" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M60.0 156.4 L56.1 158.8" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M60.0 153.0 L63.9 155.4" stroke="var(--leaf-2)" stroke-width=".45" opacity=".7"/><path d="M60.2 141.4 L59.3 141.2 L58.5 141.0 L57.7 140.8 L57.2 139.4 L56.6 138.1 L56.0 137.0 L55.4 136.2 L54.6 135.5 L53.8 135.2 L53.0 135.1 L52.0 135.2 L51.1 135.7 L50.0 136.3 L48.9 137.1 L48.2 138.8 L47.9 140.7 L48.5 141.9 L49.1 143.0 L49.7 143.9 L50.5 144.5 L51.3 144.8 L52.1 144.9 L53.1 144.7 L54.1 144.3 L55.1 143.7 L56.2 142.9 L57.4 141.9 L58.2 142.1 L59.0 142.4 L59.8 142.6Z" fill="var(--leaf-2)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M60.5 141.9 L60.4 141.1 L60.3 140.4 L60.1 139.6 L61.1 138.6 L61.9 137.7 L62.5 136.8 L63.0 135.9 L63.2 135.1 L63.2 134.3 L62.9 133.5 L62.5 132.8 L61.7 132.1 L60.8 131.5 L59.7 130.9 L58.1 131.0 L56.4 131.5 L55.6 132.4 L55.0 133.3 L54.5 134.2 L54.3 135.0 L54.3 135.8 L54.6 136.6 L55.1 137.3 L55.8 137.9 L56.7 138.6 L57.8 139.2 L59.1 139.8 L59.2 140.5 L59.3 141.3 L59.5 142.1Z" fill="var(--leaf-2)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M60.4 142.4 L61.0 141.8 L61.6 141.2 L62.2 140.6 L63.7 140.9 L65.1 141.0 L66.3 141.0 L67.4 140.9 L68.3 140.6 L69.0 140.1 L69.5 139.4 L69.8 138.5 L70.0 137.4 L70.0 136.2 L69.8 134.8 L68.7 133.3 L67.2 132.2 L65.8 132.0 L64.6 132.0 L63.5 132.2 L62.6 132.5 L61.9 133.0 L61.4 133.7 L61.1 134.6 L61.0 135.7 L61.0 136.9 L61.1 138.3 L61.4 139.8 L60.8 140.4 L60.2 141.0 L59.6 141.6Z" fill="var(--leaf-2)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M59.7 142.5 L60.4 142.9 L61.1 143.3 L61.8 143.6 L61.9 145.0 L62.1 146.2 L62.4 147.3 L62.8 148.2 L63.3 148.9 L63.9 149.4 L64.6 149.7 L65.5 149.8 L66.5 149.7 L67.5 149.4 L68.7 148.9 L69.7 147.6 L70.4 146.1 L70.2 144.8 L69.9 143.7 L69.5 142.8 L69.0 142.1 L68.4 141.6 L67.6 141.4 L66.8 141.3 L65.8 141.4 L64.7 141.7 L63.5 142.2 L62.3 142.7 L61.6 142.3 L61.0 141.9 L60.3 141.5Z" fill="var(--leaf-2)" stroke="var(--stem)" stroke-width=".5" stroke-linejoin="round"/><path d="M60 20.0 L60.0 17.0" stroke="var(--stem)" stroke-width=".5"/></g><ellipse cx="61.7" cy="18.7" rx="2.0" ry="1.3" transform="rotate(45 61.7 18.7)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="58.3" cy="18.7" rx="2.0" ry="1.3" transform="rotate(135 58.3 18.7)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="58.3" cy="15.3" rx="2.0" ry="1.3" transform="rotate(225 58.3 15.3)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="61.7" cy="15.3" rx="2.0" ry="1.3" transform="rotate(315 61.7 15.3)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><circle cx="60.0" cy="17.0" r="1.0" fill="#e7c63a"/><path d="M60 24.0 L55.5 21.0" stroke="var(--stem)" stroke-width=".5"/><ellipse cx="56.6" cy="22.9" rx="1.8" ry="1.2" transform="rotate(60 56.6 22.9)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="53.6" cy="22.1" rx="1.8" ry="1.2" transform="rotate(150 53.6 22.1)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="54.4" cy="19.1" rx="1.8" ry="1.2" transform="rotate(240 54.4 19.1)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="57.4" cy="19.9" rx="1.8" ry="1.2" transform="rotate(330 57.4 19.9)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><circle cx="55.5" cy="21.0" r="0.9" fill="#e7c63a"/><path d="M60 24.5 L64.5 21.5" stroke="var(--stem)" stroke-width=".5"/><ellipse cx="66.3" cy="22.7" rx="1.8" ry="1.2" transform="rotate(35 66.3 22.7)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="63.3" cy="23.3" rx="1.8" ry="1.2" transform="rotate(125 63.3 23.3)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="62.7" cy="20.3" rx="1.8" ry="1.2" transform="rotate(215 62.7 20.3)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="65.7" cy="19.7" rx="1.8" ry="1.2" transform="rotate(305 65.7 19.7)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><circle cx="64.5" cy="21.5" r="0.9" fill="#e7c63a"/><path d="M60 29.0 L58.0 26.0" stroke="var(--stem)" stroke-width=".5"/><ellipse cx="58.5" cy="28.0" rx="1.7" ry="1.1" transform="rotate(75 58.5 28.0)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="56.0" cy="26.5" rx="1.7" ry="1.1" transform="rotate(165 56.0 26.5)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="57.5" cy="24.0" rx="1.7" ry="1.1" transform="rotate(255 57.5 24.0)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="60.0" cy="25.5" rx="1.7" ry="1.1" transform="rotate(345 60.0 25.5)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><circle cx="58.0" cy="26.0" r="0.9" fill="#e7c63a"/><path d="M60 30.0 L63.0 27.0" stroke="var(--stem)" stroke-width=".5"/><ellipse cx="64.3" cy="28.5" rx="1.7" ry="1.1" transform="rotate(50 64.3 28.5)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="61.5" cy="28.3" rx="1.7" ry="1.1" transform="rotate(140 61.5 28.3)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="61.7" cy="25.5" rx="1.7" ry="1.1" transform="rotate(230 61.7 25.5)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="64.5" cy="25.7" rx="1.7" ry="1.1" transform="rotate(320 64.5 25.7)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><circle cx="63.0" cy="27.0" r="0.8" fill="#e7c63a"/><ellipse cx="83.2" cy="62.7" rx="1.7" ry="1.1" transform="rotate(55 83.2 62.7)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="80.3" cy="62.2" rx="1.7" ry="1.1" transform="rotate(145 80.3 62.2)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="80.8" cy="59.3" rx="1.7" ry="1.1" transform="rotate(235 80.8 59.3)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="83.7" cy="59.8" rx="1.7" ry="1.1" transform="rotate(325 83.7 59.8)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><circle cx="82.0" cy="61.0" r="0.9" fill="#e7c63a"/><ellipse cx="78.6" cy="66.2" rx="1.5" ry="1.0" transform="rotate(70 78.6 66.2)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="76.3" cy="65.1" rx="1.5" ry="1.0" transform="rotate(160 76.3 65.1)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="77.4" cy="62.8" rx="1.5" ry="1.0" transform="rotate(250 77.4 62.8)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="79.7" cy="63.9" rx="1.5" ry="1.0" transform="rotate(340 79.7 63.9)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><circle cx="78.0" cy="64.5" r="0.8" fill="#e7c63a"/><ellipse cx="41.6" cy="54.3" rx="1.7" ry="1.1" transform="rotate(40 41.6 54.3)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="38.7" cy="54.6" rx="1.7" ry="1.1" transform="rotate(130 38.7 54.6)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="38.4" cy="51.7" rx="1.7" ry="1.1" transform="rotate(220 38.4 51.7)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="41.3" cy="51.4" rx="1.7" ry="1.1" transform="rotate(310 41.3 51.4)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><circle cx="40.0" cy="53.0" r="0.9" fill="#e7c63a"/><ellipse cx="44.3" cy="58.1" rx="1.5" ry="1.0" transform="rotate(65 44.3 58.1)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="41.9" cy="57.3" rx="1.5" ry="1.0" transform="rotate(155 41.9 57.3)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="42.7" cy="54.9" rx="1.5" ry="1.0" transform="rotate(245 42.7 54.9)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><ellipse cx="45.1" cy="55.7" rx="1.5" ry="1.0" transform="rotate(335 45.1 55.7)" fill="#fbfaf3" stroke="var(--stem)" stroke-width=".35"/><circle cx="43.5" cy="56.5" r="0.8" fill="#e7c63a"/><g fill="var(--leaf-2)" stroke="var(--stem)" stroke-width=".4"><ellipse cx="60" cy="10.5" rx="1.6" ry="2.2"/><ellipse cx="57.6" cy="12.6" rx="1.3" ry="1.8"/><ellipse cx="62.4" cy="12.8" rx="1.3" ry="1.8"/><ellipse cx="82.5" cy="57" rx="1.2" ry="1.7"/><ellipse cx="39.6" cy="49" rx="1.2" ry="1.7"/></g>
+    </symbol>
+    <symbol id="sorghum" viewBox="0 0 120 160">
+      <path d="M60 158 L60 34" stroke="var(--stem)" stroke-width="3"/>
+      <g fill="none" stroke="var(--leaf)" stroke-width="5" stroke-linecap="round">
+        <path d="M60 140 C40 128 22 126 8 136"/><path d="M60 118 C80 104 98 104 112 114"/>
+        <path d="M60 96 C42 82 26 78 14 84"/><path d="M60 76 C78 62 92 60 104 64"/>
+      </g>
+      <g fill="var(--fruit)" opacity=".85">
+        <ellipse cx="60" cy="22" rx="11" ry="16"/>
+      </g>
+      <g fill="var(--grain)"><circle cx="54" cy="14" r="3"/><circle cx="62" cy="11" r="3"/><circle cx="66" cy="19" r="3"/><circle cx="56" cy="23" r="3"/><circle cx="63" cy="28" r="3"/><circle cx="54" cy="32" r="2.6"/><circle cx="66" cy="34" r="2.4"/></g>
+    </symbol>
+    <symbol id="rice" viewBox="0 0 120 160">
+      <g fill="none" stroke="var(--leaf)" stroke-width="3" stroke-linecap="round">
+        <path d="M52 158 C50 120 44 80 30 40"/><path d="M60 158 C60 120 62 90 66 50"/><path d="M66 158 C72 130 86 104 104 86"/><path d="M56 158 C46 134 30 118 12 112"/>
+      </g>
+      <path d="M66 50 C70 30 84 20 98 26" stroke="var(--stem)" stroke-width="2" fill="none"/>
+      <g fill="var(--grain)">
+        <ellipse cx="74" cy="34" rx="2.4" ry="5" transform="rotate(30 74 34)"/><ellipse cx="80" cy="28" rx="2.4" ry="5" transform="rotate(50 80 28)"/>
+        <ellipse cx="87" cy="25" rx="2.4" ry="5" transform="rotate(70 87 25)"/><ellipse cx="94" cy="26" rx="2.4" ry="5" transform="rotate(95 94 26)"/>
+        <ellipse cx="99" cy="31" rx="2.2" ry="4.6" transform="rotate(120 99 31)"/><ellipse cx="72" cy="42" rx="2.4" ry="5" transform="rotate(10 72 42)"/>
+        <ellipse cx="84" cy="34" rx="2.2" ry="4.6" transform="rotate(140 84 34)"/><ellipse cx="91" cy="34" rx="2.2" ry="4.6" transform="rotate(150 91 34)"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="utility"><div class="wrap ut-row"><span class="ut-name"><b>Colorado State University</b><i aria-hidden="true"></i>Department of Biology</span><a id="scholarUtil" href="https://scholar.google.com/citations?hl=en&amp;user=6NLH3KkAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Google Scholar ↗</a></div></div>
+<div class="brandband">
+<div class="wrap brandrow">
+  <a class="brand" href="#home" aria-label="Reddy Lab home">
+    <span class="emblem" aria-hidden="true">
+      <svg viewBox="0 0 120 160"><use href="#arabidopsis"/></svg>
+    </span>
+    <span class="wordmark">
+      <b>Reddy Lab</b>
+      <small>Plant signaling and RNA biology</small>
+    </span>
+  </a>
+  <p class="brand-tag">Calcium Signaling<br>Pre-mRNA Splicing<br>Epitranscriptome<br>Plant Biotechnology</p>
+</div>
+</div>
+<header class="menubar">
+  <div class="wrap mb-row">
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="main" id="nav" aria-label="Main">
+      <a class="top-link" href="#home">Home</a>
+      <div class="dd"><button class="dd-btn" aria-expanded="false">Research</button>
+        <div class="dd-menu">
+          <a href="#research">Overview</a>
+          <a href="#systems">Plant systems</a>
+          <a href="#statement">Statement</a>
+          <a href="#calcium">Calcium signaling</a>
+          <a href="#splicing">Splicing</a>
+          <a href="#impact">Impact of work</a>
+          <a href="#funding">Funding</a>
+          <!-- <a href="#talks">Talks and presentations</a> (coverage and invited talks masked for now) -->
+          <a href="#honors">Honors</a>
+        </div></div>
+      <div class="dd"><button class="dd-btn" aria-expanded="false">People</button>
+        <div class="dd-menu">
+          <a href="#pi">Principal investigator</a>
+          <a href="#saps">Special Assistant Professors</a>
+          <a href="#postdocs">Postdocs</a>
+          <a href="#grads">Graduate students</a>
+          <a href="#undergrads">Undergraduates</a>
+          <a href="#alumni">Lab members</a>
+          <!-- <a href="#svc-gradcomm">Graduate committees</a> (service hidden for now) -->
+          <a href="#collaborators">Collaborators</a>
+          <!-- <a href="#gallery">Lab photos</a> (masked for now) -->
+        </div></div>
+      <div class="dd"><button class="dd-btn" aria-expanded="false">Publications</button>
+        <div class="dd-menu">
+          <a href="#publications">All</a>
+          <a href="#pubs-ca">Calcium signaling</a>
+          <a href="#pubs-sp">Splicing</a>
+          <a href="#pubs-mod">Epitranscriptome</a>
+          <a href="#pubs-comp">Computational</a>
+          <a href="#pubs-bio">Plant Biotechnology</a>
+          <a href="#pubs-other">Other</a>
+          <a class="scholar-link" href="https://scholar.google.com/citations?hl=en&amp;user=6NLH3KkAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Google Scholar ↗</a>
+        </div></div>
+      <a class="top-link" href="#teaching">Teaching</a>
+      <a class="top-link" href="#movies">Movies</a>
+      <a class="top-link" href="#art">Science as Art</a>
+      <!-- Service is hidden for now. To restore, replace the Teaching link above with this menu and remove "hidden" from the SERVICE section.
+      <div class="dd"><button class="dd-btn" aria-expanded="false">Teaching &amp; Service</button>
+        <div class="dd-menu">
+          <a href="#teaching">Teaching courses</a>
+          <a href="#svc-committees">Committees: University, College, Dept</a>
+          <a href="#svc-society">Society service</a>
+          <a href="#svc-panels">Panels</a>
+          <a href="#svc-reviewer">Reviewer of journals</a>
+          <a href="#svc-editorial">Editorial responsibilities</a>
+          <a href="#svc-books">Edited books and special issues</a>
+        </div></div>
+      -->
+      <a class="top-link" href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+
+<main id="home">
+
+  <!-- SHOWCASE: covers and plant art -->
+  <section class="block showcase" id="covers">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><p class="eyebrow">Journal and Book Covers</p><h2>Covers Featuring Our Research</h2></div>
+      </div>
+      <div class="cover-row" id="coverGrid"></div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section class="quote-band" aria-label="Lab motto">
+    <div class="wrap">
+      <div class="quote-grid">
+        <blockquote class="motto">
+          <p>Human life depends on plants. Every breath we take and every bite we eat begins with one.</p>
+        </blockquote>
+
+        <div class="systems" id="systems" aria-label="Plant systems studied in the lab">
+          <div class="system" id="sys-arabidopsis"><svg aria-hidden="true"><use href="#arabidopsis"/></svg><h4>Arabidopsis thaliana</h4></div>
+          <div class="system" id="sys-sorghum"><svg aria-hidden="true"><use href="#sorghum"/></svg><h4>Sorghum bicolor</h4></div>
+          <div class="system" id="sys-rice"><svg aria-hidden="true"><use href="#rice"/></svg><h4>Oryza sativa</h4></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPAL INVESTIGATOR -->
+  <section class="block" id="pi">
+    <div class="wrap">
+      <div class="pi" id="piBlock"></div>
+    </div>
+  </section>
+
+  <!-- HERO -->
+  <div class="wrap hero">
+    <div class="hero-head">
+      <h1 class="hero-title">How plants decode <em>calcium</em> signals and remodel their <em>transcriptomes</em> in response to their environment</h1>
+    </div>
+    <div class="hero-figs">
+      <figure class="genemodel fig-wide">
+        <figcaption class="fig-title">Calcium signaling</figcaption>
+        <a href="plant-art/calcium_signaling_combined.jpg" target="_blank" rel="noopener" title="Open full size" class="fig-link"><img class="fig-img" src="plant-art/calcium_signaling_combined.jpg" alt="Calcium signaling. Left: stresses raise cytosolic calcium, which regulates transcription factors directly or through calmodulin, CBK/CCaMK, CDPK/CCaMK, phosphatases and CBL–CIPK (routes a to f). Right: pathogen-induced calcium signals act through calmodulin-binding CAMTA3, CBP60, WRKY and TGA transcription factors and through CDPKs to control salicylic acid and immune responses." loading="lazy"></a>
+          <p class="fig-credit">From Reddy et al. (2011) <i>Plant Cell</i> 23:2010–2032</p>
+      </figure>
+      <figure class="genemodel">
+        <figcaption class="fig-title">Pre-mRNA splicing</figcaption>
+        <div class="fig-pair">
+          <a class="fig-box" href="plant-art/splicing_seq_methods.jpg" target="_blank" rel="noopener" title="Open full size"><img src="plant-art/splicing_seq_methods.jpg" alt="Profiling transcriptomes and splicing: Illumina RNA-seq, PacBio Iso-seq and Nanopore direct RNA-seq workflows and what each can detect" loading="lazy"></a>
+          <a class="fig-box" href="plant-art/splicing_regulators_methods.jpg" target="_blank" rel="noopener" title="Open full size"><img src="plant-art/splicing_regulators_methods.jpg" alt="Approaches to study splicing regulators: in vitro splicing, splicing reporters, yeast two-hybrid screening, co-immunoprecipitation, speckle proteomics and mRNA–RBP trapping methods" loading="lazy"></a>
+        </div>
+        <p class="fig-credit">From Reddy et al. (2020) <i>Biochemical Society Transactions</i> 48:2399–2414</p>
+      </figure>
+      <figure class="genemodel" id="fig-metabolic">
+        <figcaption class="fig-title">Metabolic engineering of plants to produce high-value compounds</figcaption>
+        <div class="fig-pair fig-pair-meta">
+          <a class="fig-box" href="plant-art/butanetriol_pathway.jpg" target="_blank" rel="noopener" title="Open full size"><img src="plant-art/butanetriol_pathway.jpg" alt="Engineered pathways converting D-xylose and L-arabinose to 1,2,4-butanetriol, and the multigene construct used to express the bacterial enzymes in plants" loading="lazy"></a>
+          <a class="fig-box" href="plant-art/butanetriol_gcms.jpg" target="_blank" rel="noopener" title="Open full size"><img src="plant-art/butanetriol_gcms.jpg" alt="GC-MS chromatograms of butanetriol standard, wild-type plants and an engineered line producing butanetriol" loading="lazy"></a>
+        </div>
+        <p class="fig-credit">From Abdel-Ghany et al. (2013) <i>Metabolic Engineering</i> 20:109–120</p>
+      </figure>
+    </div>
+    <div class="hero-body">
+      <p class="lede">We study calcium/calmodulin-mediated signaling, pre-mRNA splicing and the epitranscriptome in plants, integrating molecular genetics, cell biology, biochemistry and machine learning tools to understand how plants grow, perceive their environment and withstand stress.</p>
+      <div class="cta">
+          <a class="btn solid" href="#research">Explore our research</a>
+          <a class="btn" href="#publications">Publications</a>
+          <a class="btn" id="scholarTop" href="https://scholar.google.com/citations?hl=en&amp;user=6NLH3KkAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Google Scholar ↗</a>
+        </div>
+    </div>
+
+    <div class="species" aria-label="Plant systems studied in the lab" hidden>
+      <a class="sp-card" href="#sys-arabidopsis"><svg role="img" aria-label="Arabidopsis"><use href="#arabidopsis"/></svg><span>Arabidopsis</span></a>
+      <a class="sp-card" href="#sys-sorghum"><svg role="img" aria-label="Sorghum"><use href="#sorghum"/></svg><span>Sorghum</span></a>
+      <a class="sp-card" href="#sys-rice"><svg role="img" aria-label="Rice"><use href="#rice"/></svg><span>Rice</span></a>
+    </div>
+  </div>
+
+
+  <!-- RESEARCH -->
+  <section class="block" id="research">
+    <div class="wrap">
+      <div class="sec-head"><div><p class="eyebrow">Research</p><h2>Research statement</h2></div></div>
+      <div class="statement" id="statement">
+        <p class="eyebrow" style="padding-top:6px">Overview</p>
+        <div>
+          <p>Plants are sessile and must continually sense and cope with changes in their environment. Our laboratory investigates two layers of regulation that link perception to response: calcium/calmodulin-mediated signal transduction and post-transcriptional control of gene expression through pre-mRNA splicing and the epitranscriptome.</p>
+          <p>We combine genetics, biochemistry and cell biology with single-molecule long-read sequencing and machine learning to map transcriptome complexity, understand regulatory genomics across model and cereal crop species, to identify the <i>cis</i>-elements and <i>trans</i>-acting factors that govern splicing, and to define how stimulus-specific Ca²⁺ signatures are decoded by calmodulin and its targets to reprogram gene expression.</p>
+        </div>
+      </div>
+
+      <div class="themes">
+        <article class="theme ca" id="calcium">
+          <span class="tag">Theme 1 · Calcium signaling</span>
+          <h3>Decoding Ca²⁺ signatures through calmodulin and its targets</h3>
+          <p>We identified calmodulin-binding transcription factors (CAMTAs/AtSRs), kinesins and metabolic enzymes that connect Ca²⁺ transients to growth, immunity and abiotic stress responses, including Ca²⁺/calmodulin control of salicylic-acid-mediated immunity.</p>
+          <ul><li>Calmodulin-binding proteins and CAMTA/SR transcription factors</li><li>Ca²⁺-regulated gene expression under biotic and abiotic stress</li></ul>
+          <a class="more" href="#pubs-ca">Calcium signaling papers →</a>
+        </article>
+        <article class="theme sp" id="splicing">
+          <span class="tag">Theme 2 · Pre-mRNA splicing</span>
+          <h3>Alternative splicing and the plant splicing code</h3>
+          <p>We study serine/arginine-rich (SR) and SR-like proteins such as SR45, their autoregulation and interactions with the spliceosome, and we use long-read sequencing to reveal the extent and stress responsiveness of alternative splicing in Arabidopsis, sorghum and other crops.</p>
+          <ul><li>SR proteins, splicing regulatory elements and the splicing code</li><li>Co-transcriptional splicing and nuclear speckle dynamics</li><li>Isoform-resolved transcriptomes of crops</li></ul>
+          <a class="more" href="#pubs-sp">Splicing papers →</a>
+        </article>
+        <article class="theme mod">
+          <span class="tag">Theme 3 · Epitranscriptome</span>
+          <h3>The plant epitranscriptome</h3>
+          <p>Using nanopore direct RNA sequencing, we profile N⁶-methyladenosine (m⁶A) modifications together with splicing, polyadenylation and transcription start sites on full-length molecules, to understand how modifications coordinate RNA processing.</p>
+          <ul><li>m⁶A writers, readers and erasers in plants</li><li>Crosstalk between the epitranscriptome and splicing</li></ul>
+          <a class="more" href="#pubs-mod">Epitranscriptome papers →</a>
+        </article>
+        <article class="theme comp">
+          <span class="tag">Theme 4 · Computational genomics</span>
+          <svg class="glyph" viewBox="0 0 400 64" preserveAspectRatio="none" aria-hidden="true"><g font-family="IBM Plex Mono, monospace" font-size="16" fill="var(--comp)"><text x="0" y="40">…CAG|GUAAGU…UUUCAG|G…</text></g></svg>
+          <h3>Machine learning for regulatory genomics</h3>
+          <p>In long-standing collaboration with computer scientists, including <a href="https://www.cs.colostate.edu/~asa/" target="_blank" rel="noopener">Asa Ben-Hur</a> (Department of Computer Science, Colorado State University), <a href="https://teacher.fafu.edu.cn/glf1_en/" target="_blank" rel="noopener">Lianfeng Gu</a> (Fujian Agriculture and Forestry University, China) and <a href="https://www.hutton.ac.uk/people/runxuan-zhang/" target="_blank" rel="noopener">Runxuan Zhang</a> (James Hutton Institute, UK), we develop machine learning approaches, including deep learning tools, to predict gene regulation, splice sites, splicing regulatory elements, calmodulin-binding sites and epitranscriptomic marks from large nucleic acid sequence datasets.</p>
+          <ul><li>Splicing code and isoform prediction</li><li>Long-read transcriptome assembly and annotation</li></ul>
+          <a class="more" href="#pubs-comp">Computational papers →</a>
+        </article>
+        <article class="theme bio" id="biotech">
+          <span class="tag">Theme 5 · Plant biotechnology</span>
+          <h3>Engineering plants for agriculture and industry</h3>
+          <p>We translate basic discoveries into tools and traits: betalain-based RUBY visual reporters that allow noninvasive monitoring of gene expression and splicing in living plants, metabolic engineering of <i>Arabidopsis</i> to produce platform chemicals such as phloroglucinol and butanetriol, disease-resistant transgenic potato and herbicide resistance through an auxin coreceptor mutation, and exploiting natural splicing variation for crop improvement.</p>
+          <ul><li>RUBY visual reporters</li><li>Metabolic engineering for high-value products</li><li>Disease and herbicide resistance</li></ul>
+          <a class="more" href="#pubs-bio">Plant Biotechnology papers →</a>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section class="block" id="publications" hidden>
+    <div class="wrap">
+      <a class="back-home" href="#home">← Back to home</a>
+      <div class="sec-head"><div><h2>Publications</h2></div><span class="count" id="pubCount"></span></div>
+      <div class="scholar">
+        <p>Each paper links to its publisher record (DOI) or PubMed, and to Google Scholar. The complete, continuously updated list is on Google Scholar.</p>
+        <a class="btn solid" id="scholarPub" href="https://scholar.google.com/citations?hl=en&amp;user=6NLH3KkAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Full list on Google Scholar ↗</a>
+      </div>
+      <div class="pub-tools" role="group" aria-label="Filter publications">
+        <button class="chip" data-f="all" aria-pressed="true">All</button>
+        <button class="chip" data-f="ca" aria-pressed="false">Calcium signaling</button>
+        <button class="chip" data-f="sp" aria-pressed="false">Splicing</button>
+        <button class="chip" data-f="mod" aria-pressed="false">Epitranscriptome</button>
+        <button class="chip" data-f="comp" aria-pressed="false">Computational</button>
+        <button class="chip" data-f="bio" aria-pressed="false">Plant Biotechnology</button>
+        <button class="chip" data-f="other" aria-pressed="false">Other</button>
+        <label for="pubSearch" class="eyebrow" style="position:absolute;left:-9999px">Search publications</label>
+        <input id="pubSearch" class="search" type="search" placeholder="Search title, author, journal">
+      </div>
+      <ol class="pubs" id="pubList"></ol>
+    </div>
+  </section>
+
+  <!-- PEOPLE -->
+  <section class="block subpage" id="people" hidden>
+    <div class="wrap"><a class="back-home" href="#home">← Back to home</a></div>
+    <div class="wrap">
+      <div class="groups" id="peopleGroups"></div>
+      <div id="alumniBlock"></div>
+
+      <h3 style="margin-top:48px" id="collaborators">Collaborators</h3>
+      <p class="lede" style="font-size:.95rem;margin:6px 0 16px">Principal investigators with whom we have coauthored papers.</p>
+      <div class="collab" id="collabList"></div>
+    </div>
+  </section>
+
+  <!-- IMPACT -->
+  <section class="block subpage" id="impact" hidden>
+    <div class="wrap"><a class="back-home" href="#home">← Back to home</a></div>
+    <div class="wrap impact">
+      <div>
+        <p class="eyebrow">Impact of our work</p>
+        <h2 style="margin:8px 0 14px">Decoding how plants sense and respond, to build resilient crops</h2>
+      </div>
+      <div class="stats" id="impactStats"><span id="pubN" hidden></span></div>
+    </div>
+  </section>
+
+  <!-- FUNDING -->
+  <section class="block subpage" id="funding" hidden>
+    <div class="wrap"><a class="back-home" href="#home">← Back to home</a></div>
+    <div class="wrap">
+      <div class="sec-head"><div><p class="eyebrow">Funding</p><h2>Support for our research</h2></div></div>
+      <div class="panel">
+        <p class="fund-thanks">We are grateful to the following agencies and organizations that supported our research at Colorado State University.</p>
+        <ul class="agencies" id="fundingList"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICE -->
+  <section class="block" id="service" hidden>
+    <div class="wrap">
+      <div class="sec-head"><div><p class="eyebrow">Service</p><h2>Service to the university and the profession</h2></div></div>
+      <div class="tabs" role="tablist" id="svcTabs"></div>
+      <div class="panel" id="svcPanel" role="tabpanel"></div>
+    </div>
+  </section>
+
+  <!-- TEACHING -->
+  <section class="block subpage" id="teaching" hidden>
+    <div class="wrap"><a class="back-home" href="#home">← Back to home</a></div>
+    <div class="wrap">
+      <p class="eyebrow">Teaching</p>
+      <h2 style="margin:8px 0 16px">Courses</h2>
+      <div class="panel"><ul class="rows" id="courseList" style="margin-top:0"></ul></div>
+    </div>
+  </section>
+
+  <!-- HONORS -->
+  <section class="block subpage" id="honors" hidden>
+    <div class="wrap"><a class="back-home" href="#home">← Back to home</a></div>
+    <div class="wrap">
+      <h2 style="margin:0 0 16px">Honors</h2>
+      <div class="panel"><ul class="rows" id="honorList" style="margin-top:0"></ul></div>
+    </div>
+  </section>
+
+  <!-- PHOTO GALLERY -->
+  <section class="block" id="gallery" hidden><!-- masked for now: change class to "block subpage" and restore the menu link to show it -->
+    <div class="wrap"><a class="back-home" href="#home">← Back to home</a></div>
+    <div class="wrap">
+      <div class="sec-head"><div><p class="eyebrow">Lab Photos</p><h2>Photo gallery</h2></div></div>
+      <p class="lede" style="font-size:.95rem;margin:-12px 0 16px">Lab events, retreats, conferences and field days.</p>
+      <div class="gallery" id="photoGrid"></div>
+    </div>
+  </section>
+
+  <!-- MOVIES -->
+  <section class="block subpage" id="movies" hidden>
+    <div class="wrap"><a class="back-home" href="#home">← Back to home</a></div>
+    <div class="wrap">
+      <div class="sec-head"><div><p class="eyebrow">Movies</p><h2>Proteins in motion</h2></div></div>
+      <p class="lede" style="font-size:.95rem;margin:-12px 0 20px">Live-cell imaging and time-lapse series.</p>
+      <div class="movies" id="movieGrid"></div>
+    </div>
+  </section>
+
+  <!-- NEWS + TALKS -->
+  <section class="block" id="news" hidden>
+    <div class="wrap"><a class="back-home" href="#home">← Back to home</a></div>
+    <div class="wrap two">
+      <div>
+        <p class="eyebrow">In the news</p>
+        <h2 style="margin:8px 0 16px">Coverage</h2>
+        <div class="panel"><ul class="rows" id="newsList" style="margin-top:0"></ul></div>
+      </div>
+      <div id="talks">
+        <p class="eyebrow">Talks and presentations</p>
+        <h2 style="margin:8px 0 16px">Invited talks</h2>
+        <div class="panel"><ul class="rows" id="talkList" style="margin-top:0"></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOVING SCIENCE AS ART ROW -->
+  <section class="marquee" id="art" aria-label="Science as art">
+    <div class="mq-head wrap"><span class="mq-label"><svg class="mq-ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="var(--bar)"/><circle cx="24" cy="24" r="21" fill="none" stroke="var(--csu-gold)" stroke-width="1.4"/><rect x="11" y="11" width="26" height="26" rx="2" fill="var(--csu-gold)"/><rect x="14" y="14" width="20" height="20" rx="1" fill="#fbfaf3"/><path d="M14 30c4-2 8-2 10 0s8 2 10 0v4H14z" fill="#d9e8cc"/><path d="M24 32V18" stroke="#3a5a35" stroke-width="1.3" stroke-linecap="round"/><path d="M24 28c-1-2.6-3.4-4-6.2-3.8 1 2.6 3.4 4 6.2 3.8z" fill="#4f8a4a"/><path d="M24 25.5c1-2.8 3.6-4.3 6.6-4-1.1 2.8-3.7 4.3-6.6 4z" fill="#6fae68"/><path d="M24 22c-1.6-.9-2.4-2.5-2.2-4.2 1.6.8 2.4 2.5 2.2 4.2z" fill="#86b36a"/><g fill="#ffffff" stroke="#3a5a35" stroke-width=".5"><circle cx="24" cy="16.6" r="1.3"/><circle cx="22.6" cy="17.6" r="1.1"/><circle cx="25.4" cy="17.6" r="1.1"/></g><circle cx="24" cy="17.3" r=".6" fill="#e7c63a"/></svg>Science as Art</span><button class="mq-toggle" id="mqToggle" aria-pressed="false">Pause</button></div>
+    <div class="mq-viewport"><div class="mq-track rev" id="mqArt"></div></div>
+  </section>
+
+
+  <!-- PLANT ART -->
+  <section class="block showcase" id="artImages" hidden>
+    <div class="wrap">
+      <div class="sec-head">
+        <div><p class="eyebrow">Science as Art</p><h2>Images from our research</h2></div>
+        <a class="btn" href="#gallery">Photo gallery →</a>
+      </div>
+      <div class="mosaic" id="artGrid"></div>
+      
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div><b style="color:var(--ink);font-family:var(--display);font-size:1.1rem;font-weight:500">Reddy Laboratory</b><br>Department of Biology, Colorado State University<br>Fort Collins, CO 80523, USA</div>
+    <div>reddy@colostate.edu<br><a href="https://www.biology.colostate.edu/" target="_blank" rel="noopener">CSU Department of Biology ↗</a></div>
+  </div>
+</footer>
+
+<script src="data/content.js"></script>
+<script src="js/site.js"></script>
+</body>
+</html>
