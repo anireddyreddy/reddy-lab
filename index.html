@@ -370,6 +370,17 @@ section.block{padding-block:clamp(48px,7vw,88px);border-top:1px solid var(--line
 .quote-band{padding:clamp(10px,1.5vw,16px) 0;background:var(--gold-soft);border-block:1px solid var(--line)}
 .motto{margin:0 auto;max-width:62ch;text-align:center;position:relative}
 .motto p{margin:0;font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(1.35rem,2.6vw,2rem);line-height:1.3;color:var(--green)}
+.gc-lede{color:var(--muted);margin:0 0 18px}
+.gc-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+@media (max-width:760px){.gc-grid{grid-template-columns:1fr}}
+.gc-h{margin:0 0 10px;font-size:1.25rem;display:flex;align-items:center;gap:8px}
+.gc-list{list-style:none;margin:0;padding:0}
+.gc-list li{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.gc-list li:last-child{border-bottom:0}
+.gc-list .gc-name{font-weight:600;color:var(--ink)}
+.gc-list .gc-dept{color:var(--muted);text-align:right}
+.gc-badge{display:inline-block;margin-left:6px;font-size:.66rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:var(--gold-soft);color:var(--green);border:1px solid var(--csu-gold);border-radius:3px;padding:0 5px;vertical-align:1px}
+.gc-key{font-size:.82rem;color:var(--muted);margin-top:12px}
 .back-home{display:inline-block;margin-bottom:18px;font-weight:600;font-size:.92rem;text-decoration:none;color:var(--green-2)}
 .back-home:hover{text-decoration:underline}
 #publications{border-top:3px solid var(--csu-gold)}
@@ -540,7 +551,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between}
           <a href="#grads">Graduate students</a>
           <a href="#undergrads">Undergraduates</a>
           <a href="#alumni">Lab members</a>
-          <!-- <a href="#svc-gradcomm">Graduate committees</a> (service hidden for now) -->
           <a href="#collaborators">Collaborators</a>
           <!-- <a href="#gallery">Lab photos</a> (masked for now) -->
         </div></div>
@@ -556,6 +566,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between}
           <a class="scholar-link" href="https://scholar.google.com/citations?hl=en&amp;user=6NLH3KkAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Google Scholar ↗</a>
         </div></div>
       <a class="top-link" href="#teaching">Teaching</a>
+      <a class="top-link" href="#gradcomm">Grad Committees</a>
       <a class="top-link" href="#movies">Movies</a>
       <a class="top-link" href="#art">Science as Art</a>
       <!-- Service is hidden for now. To restore, replace the Teaching link above with this menu and remove "hidden" from the SERVICE section.
@@ -788,6 +799,20 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between}
       <p class="eyebrow">Teaching</p>
       <h2 style="margin:8px 0 16px">Courses</h2>
       <div class="panel"><ul class="rows" id="courseList" style="margin-top:0"></ul></div>
+    </div>
+  </section>
+
+  <!-- GRADUATE COMMITTEES -->
+  <section class="block subpage" id="gradcomm" hidden>
+    <div class="wrap"><a class="back-home" href="#home">← Back to home</a></div>
+    <div class="wrap">
+      <h2 style="margin:0 0 6px">Graduate committees</h2>
+      <p class="gc-lede">Graduate students advised or served as a committee member, Colorado State University.</p>
+      <div class="gc-grid">
+        <div class="panel"><h3 class="gc-h">Ph.D. <span class="count" id="gcPhdN"></span></h3><ul class="gc-list" id="gcPhd"></ul></div>
+        <div class="panel"><h3 class="gc-h">M.S. <span class="count" id="gcMsN"></span></h3><ul class="gc-list" id="gcMs"></ul></div>
+      </div>
+      <p class="gc-key"><span class="gc-badge">Advisor</span> and <span class="gc-badge">Co-advisor</span> mark students advised in the Reddy Lab.</p>
     </div>
   </section>
 

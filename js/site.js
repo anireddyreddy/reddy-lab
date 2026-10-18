@@ -153,6 +153,20 @@
   }).join("") + '</div>' : '');
   set("collabList", (D.collaborators || []).map(function(c){ return '<div><b>' + esc(c.name) + '</b><span>' + esc(c.affiliation) + '</span></div>'; }).join(""));
 
+  /* ---------- Graduate committees: Ph.D. and M.S., name and department ---------- */
+  (function(){
+    var G = ((D.service || {}).gradcomm) || [];
+    function item(x){
+      var m = /^(Ph\.D\.|M\.S\.) (advisor|co-advisor|committee member)(?:, (.*))?$/.exec(x.role || "") || [];
+      var dept = m[3] || "";
+      var badge = m[2] === "advisor" ? '<span class="gc-badge">Advisor</span>' : m[2] === "co-advisor" ? '<span class="gc-badge">Co-advisor</span>' : '';
+      return '<li><span class="gc-name">' + esc(x.org) + badge + '</span><span class="gc-dept">' + esc(dept) + '</span></li>';
+    }
+    var phd = G.filter(function(x){ return /^Ph\.D\./.test(x.role); }), ms = G.filter(function(x){ return /^M\.S\./.test(x.role); });
+    set("gcPhd", phd.map(item).join("")); set("gcMs", ms.map(item).join(""));
+    set("gcPhdN", String(phd.length)); set("gcMsN", String(ms.length));
+  })();
+
   /* ---------- Impact numbers ---------- */
   var IM = D.impact;
   if (IM && $("impactStats")) {
